@@ -1705,94 +1705,88 @@ function library:init()
 
             end
 
-            function window.dropdown:Refresh()
-                if self.selected ~= nil then
-                    local list = self.selected
-                    for idx, value in next, list.values do
-                        local valueObject = self.objects.values[idx]
-                        if valueObject == nil then
-                            valueObject = {};
-                            valueObject.background = utility:Draw('Square', {
-                                Size = newUDim2(1,-4,0,18);
-                                Color = Color3.new(.25,.25,.25);
-                                Transparency = 0;
-                                ZIndex = library.zindexOrder.dropdown+1;
-                                Parent = self.objects.background;
-                            })
-                            valueObject.text = utility:Draw('Text', {
-                                Position = newUDim2(0,3,0,1);
-                                ThemeColor = 'Option Text 2';
-                                Text = tostring(value);
-                                Size = 13;
-                                Font = 2;
-                                ZIndex = library.zindexOrder.dropdown+2;
-                                Parent = valueObject.background;
-                            })
-                            valueObject.connection = utility:Connection(valueObject.background.MouseButton1Down, function()
-                                local currentList = self.selected
-                                if currentList then
-                                    local val = currentList.values[idx]
-                                    local currentSelected = currentList.selected;
-                                    local newSelected = currentList.multi and {} or val;
-                                    
-                                    if currentList.multi then
-                                        for i,v in next, currentSelected do
-                                            if v == "none" then continue end
-                                            newSelected[i] = v;
-                                        end
-                                        if table.find(newSelected, val) then
-                                            table.remove(newSelected, table.find(newSelected, val));
-                                        else
-                                            table.insert(newSelected, val)
-                                        end
-                                    end
-
-                                    currentList:Select(newSelected);
-                                    if not currentList.multi then
-                                        currentList.open = false;
-                                        currentList.objects.openText.Text = '+';
-                                        window.dropdown.selected = nil;
-                                        window.dropdown.objects.background.Visible = false;
-                                    end
-
-                                    for idx, val in next, currentList.values do
-                                        local valueObj = self.objects.values[idx]
-                                        if valueObj then
-                                            valueObj.background.Transparency = (typeof(newSelected) == 'table' and table.find(newSelected, val) or newSelected == val) and 1 or 0
-                                        end
-                                    end
-
-                                end
-                            end)
-                            self.objects.values[idx] = valueObject
-                        end
-                    end
-
-                    for idx, val in next, list.values do
-                        local valueObj = self.objects.values[idx]
-                        if valueObj then
-                            valueObj.background.Transparency = (typeof(list.selected) == 'table' and table.find(list.selected, val) or list.selected == val) and 1 or 0
-                        end
-                    end
-
-                    local y,padding = 2,2
-                    for idx, obj in next, self.objects.values do
-                        local valueStr = list.values[idx]
-                        obj.background.Visible = valueStr ~= nil
-                        if valueStr ~= nil then
-                            obj.background.Position = newUDim2(0,2,0,y);
-                            obj.text.Text = valueStr;
-                            y = y + obj.background.Object.Size.Y + padding;
-                        end
-                    end
-
-                    self.objects.background.Size = newUDim2(1,-6,0,y);    
-
-                end
+            function dropdown_mt:Refresh()
+            	-- Proteção contra undefined
+            	if not self or not self.values then return end
+            
+            	-- Limpa os objetos antigos (UI elements desenhados)
+            	self.objects = self.objects or {}
+            	self.objects.values = self.objects.values or {}
+            
+            	for _, obj in pairs(self.objects.values) do
+            		if obj.background then obj.background.Visible = false end
+            	end
+            
+            	-- Recria visualmente os valores
+            	local y = 2
+            	local padding = 2
+            
+            	for idx, val in ipairs(self.values) do
+            		local valueObj = self.objects.values[idx]
+            
+            		-- Se o valor visual ainda não existe, cria
+            		if not valueObj then
+            			valueObj = {}
+            			valueObj.background = utility:Draw("Square", {
+            				Size = newUDim2(1, -4, 0, 18),
+            				Color = Color3.new(0.25, 0.25, 0.25),
+            				Transparency = 0,
+            				ZIndex = library.zindexOrder.dropdown + 1,
+            				Parent = self.objects.background
+            			})
+            
+            			valueObj.text = utility:Draw("Text", {
+            				Position = newUDim2(0, 3, 0, 1),
+            				ThemeColor = "Option Text 2",
+            				Text = tostring(val),
+            				Size = 13,
+            				Font = 2,
+            				ZIndex = library.zindexOrder.dropdown + 2,
+            				Parent = valueObj.background
+            			})
+            
+            			valueObj.connection = utility:Connection(valueObj.background.MouseButton1Down, function()
+            				local selected = val
+            				self.selected = selected
+            				self.callback(selected)
+            
+            				-- Fecha o dropdown
+            				if self.open then
+            					self.open = false
+            					self.objects.openText.Text = "+"
+            					window.dropdown.selected = nil
+            					self.objects.background.Visible = false
+            				end
+            
+            				-- Atualiza visual de seleção
+            				for i, v in ipairs(self.values) do
+            					local o = self.objects.values[i]
+            					if o and o.background then
+            						o.background.Transparency = (v == self.selected) and 1 or 0
+            					end
+            				end
+            			end)
+            
+            			self.objects.values[idx] = valueObj
+            		end
+            
+            		-- Atualiza posição e texto
+            		valueObj.background.Position = newUDim2(0, 2, 0, y)
+            		valueObj.text.Text = val
+            		valueObj.background.Visible = true
+            
+            		-- Marca selecionado
+            		valueObj.background.Transparency = (val == self.selected) and 1 or 0
+            
+            		y = y + valueObj.background.Object.Size.Y + padding
+            	end
+            
+            	-- Atualiza tamanho do dropdown visual
+            	if self.objects.background then
+            		self.objects.background.Size = newUDim2(1, -6, 0, y)
+            	end
             end
-        
-            window.dropdown:Refresh();
-        end
+
         -------------------------
 
         local function tooltip(option)
@@ -4762,4 +4756,5 @@ function library:CreateSettingsTab(menu)
 end
 
 getgenv().library = library
+
 return library
