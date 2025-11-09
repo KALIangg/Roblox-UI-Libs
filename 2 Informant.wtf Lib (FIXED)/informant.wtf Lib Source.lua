@@ -3693,114 +3693,149 @@ function library:init()
                         risky = false;
                         objects = {};
                     };
-
+                
                     local blacklist = {'objects', 'dragging'};
                     for i,v in next, data do
                         if not table.find(blacklist, i) and box[i] ~= nil then
                             box[i] = v;
                         end
                     end
-                    
+                
                     table.insert(self.options, box)
-
+                
                     if box.flag then
                         library.flags[box.flag] = box.input;
                         library.options[box.flag] = box;
                     end
+                
+                    local objs = box.objects;
+                    local z = library.zindexOrder.window + 25;
+                
+                    objs.holder = utility:Draw('Square', {
+                        Size = newUDim2(1,0,0,37);
+                        Transparency = 0;
+                        ZIndex = z+4;
+                        Parent = section.objects.optionholder;
+                    })
+                
+                    objs.background = utility:Draw('Square', {
+                        Size = newUDim2(1,-4,0,15);
+                        Position = newUDim2(0,2,1,-17);
+                        ThemeColor = 'Option Background';
+                        ZIndex = z+2;
+                        Parent = objs.holder;
+                    })
+                
+                    objs.border1 = utility:Draw('Square', {
+                        Size = newUDim2(1,2,1,2);
+                        Position = newUDim2(0,-1,0,-1);
+                        ThemeColor = 'Option Border 1';
+                        ZIndex = z+1;
+                        Parent = objs.background;
+                    })
+                
+                    objs.border2 = utility:Draw('Square', {
+                        Size = newUDim2(1,2,1,2);
+                        Position = newUDim2(0,-1,0,-1);
+                        ThemeColor = 'Option Border 2';
+                        ZIndex = z;
+                        Parent = objs.border1;
+                    })
+                
+                    objs.gradient = utility:Draw('Image', {
+                        Size = newUDim2(1,0,1,0);
+                        Data = library.images.gradientp90;
+                        Transparency = .65;
+                        ZIndex = z+4;
+                        Parent = objs.background;
+                    })
+                
+                    objs.text = utility:Draw('Text', {
+                        Position = newUDim2(0,2,0,2);
+                        ThemeColor = box.risky and 'Risky Text Enabled' or 'Option Text 2';
+                        Size = 13;
+                        Font = 2;
+                        ZIndex = z+1;
+                        Outline = true;
+                        Parent = objs.holder;
+                    })
+                
+                    objs.inputText = utility:Draw('Text', {
+                        Position = newUDim2(0,2,0,0);
+                        ThemeColor = 'Option Text 2';
+                        Size = 13;
+                        Font = 2;
+                        ZIndex = z+5;
+                        Outline = true;
+                        Parent = objs.background;
+                    })
+                
+                    -- // TextBox nativo invisível para capturar input real
+                    objs.nativeBox = Instance.new("TextBox")
+                    objs.nativeBox.BackgroundTransparency = 1
+                    objs.nativeBox.TextTransparency = 1
+                    objs.nativeBox.ClearTextOnFocus = false
+                    objs.nativeBox.MultiLine = false
+                    objs.nativeBox.Font = Enum.Font.Code
+                    objs.nativeBox.TextSize = 13
+                    objs.nativeBox.TextColor3 = Color3.new(1, 1, 1)
+                    objs.nativeBox.Parent = objs.background
+                    objs.nativeBox.ZIndex = 999
+                    objs.nativeBox.Size = UDim2.new(1, 0, 1, 0)
+                    objs.nativeBox.Visible = false
+                
+                    -- // Eventos
+                    utility:Connection(objs.holder.MouseEnter, function()
+                        objs.border1.ThemeColor = 'Accent'
+                    end)
+                
+                    utility:Connection(objs.holder.MouseLeave, function()
+                        objs.border1.ThemeColor = 'Option Border 1'
+                    end)
+                
+                    -- Foco
+                    utility:Connection(objs.holder.MouseButton1Down, function()
+                        if not box.focused then
+                            box.focused = true
+                            objs.nativeBox.Visible = true
+                            objs.nativeBox:CaptureFocus()
+                
+                            -- bloqueia movimento no jogo
+                            actionservice:BindAction(
+                                'FreezeMovement',
+                                function()
+                                    return Enum.ContextActionResult.Sink
+                                end,
+                                false,
+                                unpack(Enum.PlayerActions:GetEnumItems())
+                            )
+                        else
+                            -- desfoca
+                            box.focused = false
+                            objs.nativeBox.Visible = false
+                            objs.nativeBox:ReleaseFocus()
+                            actionservice:UnbindAction('FreezeMovement')
+                        end
+                    end)
+                
+                    -- Atualiza texto digitado
+                    objs.nativeBox:GetPropertyChangedSignal("Text"):Connect(function()
+                        box.input = objs.nativeBox.Text
+                        objs.inputText.Text = objs.nativeBox.Text
+                        library.flags[box.flag] = box.input
+                        if box.callback then
+                            box.callback(box.input)
+                        end
+                    end)
+                
+                    -- Sai do foco ao apertar Enter
+                    objs.nativeBox.FocusLost:Connect(function()
+                        box.focused = false
+                        objs.nativeBox.Visible = false
+                        actionservice:UnbindAction('FreezeMovement')
+                    end)
+                end
 
-                    --- Create Objects ---
-                    do
-                        local objs = box.objects;
-                        local z = library.zindexOrder.window+25;
-
-                        objs.holder = utility:Draw('Square', {
-                            Size = newUDim2(1,0,0,37);
-                            Transparency = 0;
-                            ZIndex = z+4;
-                            Parent = section.objects.optionholder;
-                        })
-
-                        objs.background = utility:Draw('Square', {
-                            Size = newUDim2(1,-4,0,15);
-                            Position = newUDim2(0,2,1,-17);
-                            ThemeColor = 'Option Background';
-                            ZIndex = z+2;
-                            Parent = objs.holder;
-                        })
-
-                        objs.border1 = utility:Draw('Square', {
-                            Size = newUDim2(1,2,1,2);
-                            Position = newUDim2(0,-1,0,-1);
-                            ThemeColor = 'Option Border 1';
-                            ZIndex = z+1;
-                            Parent = objs.background;
-                        })
-
-                        objs.border2 = utility:Draw('Square', {
-                            Size = newUDim2(1,2,1,2);
-                            Position = newUDim2(0,-1,0,-1);
-                            ThemeColor = 'Option Border 2';
-                            ZIndex = z;
-                            Parent = objs.border1;
-                        })
-
-                        objs.gradient = utility:Draw('Image', {
-                            Size = newUDim2(1,0,1,0);
-                            Data = library.images.gradientp90;
-                            Transparency = .65;
-                            ZIndex = z+4;
-                            Parent = objs.background;
-                        })
-
-                        objs.text = utility:Draw('Text', {
-                            Position = newUDim2(0,2,0,2);
-                            ThemeColor = box.risky and 'Risky Text Enabled' or 'Option Text 2';
-                            Size = 13;
-                            Font = 2;
-                            ZIndex = z+1;
-                            Outline = true;
-                            Parent = objs.holder;
-                        })
-
-                        objs.inputText = utility:Draw('Text', {
-                            Position = newUDim2(0,2,0,0);
-                            ThemeColor = 'Option Text 2';
-                            Size = 13;
-                            Font = 2;
-                            ZIndex = z+5;
-                            Outline = true;
-                            Parent = objs.background;
-                        })
-
-                        utility:Connection(objs.holder.MouseEnter, function()
-                            objs.border1.ThemeColor = 'Accent';
-                        end)
-
-                        utility:Connection(objs.holder.MouseLeave, function()
-                            objs.border1.ThemeColor = 'Option Border 1';
-                        end)
-
-                        utility:Connection(objs.holder.MouseButton1Down, function()
-                            if box.focused then
-                                box:ReleaseFocus();
-                                actionservice:UnbindAction('FreezeMovement');
-                            else
-                                actionservice:BindAction(
-                                    'FreezeMovement',
-                                    function()
-                                        return Enum.ContextActionResult.Sink
-                                    end,
-                                    false,
-                                    unpack(Enum.PlayerActions:GetEnumItems())
-                                )
-                                box:CaptureFocus(inputservice:IsKeyDown(Enum.KeyCode.LeftControl));
-                                if inputservice:IsKeyDown(Enum.KeyCode.LeftControl) then
-                                    objs.inputText.Text = '';
-                                end
-                            end
-                        end)
-
-                    end
                     ----------------------
 
                     function box:SetText(str)
@@ -4763,3 +4798,4 @@ end
 
 getgenv().library = library
 return library
+
