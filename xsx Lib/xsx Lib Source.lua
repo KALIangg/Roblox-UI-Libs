@@ -909,13 +909,12 @@ function library:Init(key)
     edgeCorner.Name = "edgeCorner"
     edgeCorner.Parent = edge
 
-    -- ⚫ Fundo interno principal
     background.Name = "background"
     background.Parent = edge
     background.AnchorPoint = Vector2.new(0.5, 0.5)
     background.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
     background.Position = UDim2.new(0.5, 0, 0.5, 0)
-    background.Size = UDim2.new(0, 996, 0, 596)
+    background.Size = UDim2.new(1, -8, 1, -8) -- 🔥 ocupa quase toda a borda
     background.BorderSizePixel = 0
     background.ClipsDescendants = true
 
@@ -969,29 +968,23 @@ function library:Init(key)
     barLayout.Parent = barFolder
     barLayout.HorizontalAlignment = Enum.HorizontalAlignment.Center
 
-    -- 🧱 Container lateral (abas)
+    -- 🧱 Área lateral (tabs)
     tabButtonsEdge.Name = "tabButtonsEdge"
     tabButtonsEdge.Parent = background
-    tabButtonsEdge.AnchorPoint = Vector2.new(0.5, 0.5)
+    tabButtonsEdge.AnchorPoint = Vector2.new(0, 0)
     tabButtonsEdge.BackgroundColor3 = Color3.fromRGB(35, 0, 0)
-    tabButtonsEdge.Position = UDim2.new(0.18, 0, 0.56, 0)
-    tabButtonsEdge.Size = UDim2.new(0, 200, 0, 480)
+    tabButtonsEdge.Position = UDim2.new(0, 10, 0, 55)
+    tabButtonsEdge.Size = UDim2.new(0, 220, 1, -70) -- 🔥 altura total ajustada
 
-    tabButtonCorner.CornerRadius = UDim.new(0, 3)
-    tabButtonCorner.Name = "tabButtonCorner"
+    tabButtonCorner.CornerRadius = UDim.new(0, 4)
     tabButtonCorner.Parent = tabButtonsEdge
 
     tabButtons.Name = "tabButtons"
     tabButtons.Parent = tabButtonsEdge
     tabButtons.AnchorPoint = Vector2.new(0.5, 0.5)
     tabButtons.BackgroundColor3 = Color3.fromRGB(45, 0, 0)
-    tabButtons.ClipsDescendants = true
     tabButtons.Position = UDim2.new(0.5, 0, 0.5, 0)
-    tabButtons.Size = UDim2.new(0, 198, 0, 478)
-
-    tabButtonCorner_2.CornerRadius = UDim.new(0, 3)
-    tabButtonCorner_2.Name = "tabButtonCorner_2"
-    tabButtonCorner_2.Parent = tabButtons
+    tabButtons.Size = UDim2.new(1, -4, 1, -4)
 
     tabButtonsGradient.Color = ColorSequence.new({
         ColorSequenceKeypoint.new(0.00, Color3.fromRGB(60, 0, 0)),
@@ -1000,27 +993,15 @@ function library:Init(key)
     tabButtonsGradient.Rotation = 90
     tabButtonsGradient.Parent = tabButtons
 
-    tabButtonLayout.Name = "tabButtonLayout"
-    tabButtonLayout.Parent = tabButtons
-    tabButtonLayout.HorizontalAlignment = Enum.HorizontalAlignment.Center
-    tabButtonLayout.SortOrder = Enum.SortOrder.LayoutOrder
-
-    tabButtonPadding.Name = "tabButtonPadding"
-    tabButtonPadding.Parent = tabButtons
-    tabButtonPadding.PaddingBottom = UDim.new(0, 4)
-    tabButtonPadding.PaddingLeft = UDim.new(0, 4)
-    tabButtonPadding.PaddingRight = UDim.new(0, 4)
-    tabButtonPadding.PaddingTop = UDim.new(0, 4)
-
-    -- ⚙️ Container principal
+    -- ⚙️ Área de conteúdo (container)
     containerEdge.Name = "containerEdge"
     containerEdge.Parent = background
-    containerEdge.AnchorPoint = Vector2.new(0.5, 0.5)
+    containerEdge.AnchorPoint = Vector2.new(0, 0)
     containerEdge.BackgroundColor3 = Color3.fromRGB(35, 0, 0)
-    containerEdge.Position = UDim2.new(0.65, 0, 0.56, 0)
-    containerEdge.Size = UDim2.new(0, 700, 0, 480)
+    containerEdge.Position = UDim2.new(0, 245, 0, 55)
+    containerEdge.Size = UDim2.new(1, -260, 1, -70)
 
-    tabButtonCorner_3.CornerRadius = UDim.new(0, 3)
+    tabButtonCorner_3.CornerRadius = UDim.new(0, 4)
     tabButtonCorner_3.Parent = containerEdge
 
     container.Name = "container"
@@ -1028,10 +1009,7 @@ function library:Init(key)
     container.AnchorPoint = Vector2.new(0.5, 0.5)
     container.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
     container.Position = UDim2.new(0.5, 0, 0.5, 0)
-    container.Size = UDim2.new(0, 698, 0, 478)
-
-    containerCorner.CornerRadius = UDim.new(0, 3)
-    containerCorner.Parent = container
+    container.Size = UDim2.new(1, -6, 1, -6)
 
     containerGradient.Color = ColorSequence.new({
         ColorSequenceKeypoint.new(0.00, Color3.fromRGB(30, 0, 0)),
@@ -3596,4 +3574,5 @@ function library:Init(key)
     return TabLibrary
 end
 return library
+
 
