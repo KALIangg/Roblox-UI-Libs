@@ -759,7 +759,7 @@ function library:Introduction()
     xsxLogo.Size = UDim2.new(0, 448, 0, 150)
     xsxLogo.Visible = true
     xsxLogo.Image = "http://www.roblox.com/asset/?id=9365068051"
-    xsxLogo.ImageColor3 = Color3.fromRGB(159, 115, 255)
+    xsxLogo.ImageColor3 = Color3.fromRGB(255, 0, 0)
     xsxLogo.ImageTransparency = 1
     
     hashLogo.Name = "hashLogo"
@@ -771,7 +771,7 @@ function library:Introduction()
     hashLogo.Size = UDim2.new(0, 150, 0, 150)
     hashLogo.Visible = true
     hashLogo.Image = "http://www.roblox.com/asset/?id=9365069861"
-    hashLogo.ImageColor3 = Color3.fromRGB(159, 115, 255)
+    hashLogo.ImageColor3 = Color3.fromRGB(255, 0, 0)
     hashLogo.ImageTransparency = 1
     
     xsx.Name = "xsx"
@@ -780,8 +780,8 @@ function library:Introduction()
     xsx.BackgroundTransparency = 1.000
     xsx.Size = UDim2.new(0, 80, 0, 21)
     xsx.Font = Enum.Font.Code
-    xsx.Text = "powered by xsx"
-    xsx.TextColor3 = Color3.fromRGB(124, 124, 124)
+    xsx.Text = "powered by Poze Nigga"
+    xsx.TextColor3 = Color3.fromRGB(255, 0, 0)
     xsx.TextSize = 10.000
     xsx.TextTransparency = 1
     
@@ -914,7 +914,7 @@ function library:Init(key)
     background.BackgroundColor3 = Color3.fromRGB(20, 20, 20)
     background.BorderSizePixel = 0
     background.Position = UDim2.new(0.5, 0, 0.5, 0)
-    background.Size = UDim2.new(0, 592, 0, 404)
+    background.Size = UDim2.new(0, 1000, 0, 600)
     background.ClipsDescendants = true
     
     backgroundCorner.CornerRadius = UDim.new(0, 4)
@@ -932,7 +932,7 @@ function library:Init(key)
     headerLabel.Name = "headerLabel"
     headerLabel.Parent = background
     headerLabel.BackgroundTransparency = 1
-    headerLabel.Size = UDim2.new(0, 592, 0, 38)
+    headerLabel.Size = UDim2.new(0, 1000, 0, 600)
     headerLabel.Font = Enum.Font.Code
     headerLabel.Text = title
     headerLabel.TextColor3 = Color3.fromRGB(255, 60, 60)
@@ -951,7 +951,7 @@ function library:Init(key)
     bar.Parent = barFolder
     bar.BackgroundColor3 = Color3.fromRGB(255, 0, 0)
     bar.BackgroundTransparency = 0.3
-    bar.Size = UDim2.new(0, 592, 0, 1)
+    bar.Size = UDim2.new(0, 1000, 0, 600)
     bar.BorderSizePixel = 0
     
     barCorner.CornerRadius = UDim.new(0, 2)
@@ -3530,6 +3530,7 @@ function library:Init(key)
     return TabLibrary
 end
 return library
+
 
 
 
