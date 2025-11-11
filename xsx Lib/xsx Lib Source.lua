@@ -881,7 +881,7 @@ function library:Init(key)
     screen.Parent = CoreGuiService
     screen.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 
-    -- 🔳 Moldura principal
+    -- 🔳 Moldura principal (borda externa)
     edge.Name = "edge"
     edge.Parent = screen
     edge.AnchorPoint = Vector2.new(0.5, 0.5)
@@ -889,85 +889,109 @@ function library:Init(key)
     edge.Position = UDim2.new(0.5, 0, 0.5, 0)
     edge.Size = UDim2.new(0, 1000, 0, 600)
 
+    -- 🔴 Brilho da borda
     local edgeStroke = Instance.new("UIStroke")
     edgeStroke.Color = Color3.fromRGB(255, 0, 0)
-    edgeStroke.Thickness = 1.4
+    edgeStroke.Thickness = 1.3
     edgeStroke.Transparency = 0.15
     edgeStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
     edgeStroke.Parent = edge
 
     drag(edge, 0.04)
-
+    local CanChangeVisibility = true
     UserInputService.InputBegan:Connect(function(input)
-        if input.KeyCode == key then
+        if CanChangeVisibility and input.KeyCode == key then
             edge.Visible = not edge.Visible
         end
     end)
 
     edgeCorner.CornerRadius = UDim.new(0, 4)
+    edgeCorner.Name = "edgeCorner"
     edgeCorner.Parent = edge
 
-    -- ⚫ Fundo interno principal (preenche quase tudo)
+    -- ⚫ Fundo interno principal
     background.Name = "background"
     background.Parent = edge
     background.AnchorPoint = Vector2.new(0.5, 0.5)
     background.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
     background.Position = UDim2.new(0.5, 0, 0.5, 0)
-    background.Size = UDim2.new(1, -8, 1, -8) -- 🔥 ocupa quase toda a borda
+    background.Size = UDim2.new(0, 996, 0, 596)
     background.BorderSizePixel = 0
     background.ClipsDescendants = true
 
     backgroundCorner.CornerRadius = UDim.new(0, 4)
     backgroundCorner.Parent = background
 
+    -- 🔥 Gradiente dark vermelho
     backgroundGradient.Color = ColorSequence.new({
         ColorSequenceKeypoint.new(0.00, Color3.fromRGB(30, 0, 0)),
         ColorSequenceKeypoint.new(0.50, Color3.fromRGB(25, 25, 25)),
         ColorSequenceKeypoint.new(1.00, Color3.fromRGB(40, 0, 0))
     })
     backgroundGradient.Rotation = 90
+    backgroundGradient.Name = "backgroundGradient"
     backgroundGradient.Parent = background
 
-    -- 🔴 Header (topo)
+    -- 🩸 Header
     headerLabel.Name = "headerLabel"
     headerLabel.Parent = background
     headerLabel.BackgroundTransparency = 1
-    headerLabel.Size = UDim2.new(1, 0, 0, 40)
+    headerLabel.Size = UDim2.new(0, 996, 0, 40)
     headerLabel.Font = Enum.Font.Code
     headerLabel.Text = title
     headerLabel.TextColor3 = Color3.fromRGB(255, 70, 70)
     headerLabel.TextSize = 17
     headerLabel.TextXAlignment = Enum.TextXAlignment.Left
+    headerLabel.RichText = true
 
+    headerPadding.Name = "headerPadding"
     headerPadding.Parent = headerLabel
+    headerPadding.PaddingBottom = UDim.new(0, 6)
     headerPadding.PaddingLeft = UDim.new(0, 14)
+    headerPadding.PaddingTop = UDim.new(0, 6)
 
     -- 🔻 Linha separadora vermelha
-    bar.Name = "bar"
-    bar.Parent = background
-    bar.BackgroundColor3 = Color3.fromRGB(255, 0, 0)
-    bar.BackgroundTransparency = 0.3
-    bar.BorderSizePixel = 0
-    bar.Position = UDim2.new(0, 0, 0, 40)
-    bar.Size = UDim2.new(1, 0, 0, 1)
+    barFolder.Name = "barFolder"
+    barFolder.Parent = background
 
-    -- 🧱 Área lateral (tabs)
+    bar.Name = "bar"
+    bar.Parent = barFolder
+    bar.BackgroundColor3 = Color3.fromRGB(255, 0, 0)
+    bar.BackgroundTransparency = 0.25
+    bar.Size = UDim2.new(0, 996, 0, 1)
+    bar.BorderSizePixel = 0
+
+    barCorner.CornerRadius = UDim.new(0, 2)
+    barCorner.Name = "barCorner"
+    barCorner.Parent = bar
+
+    barLayout.Name = "barLayout"
+    barLayout.Parent = barFolder
+    barLayout.HorizontalAlignment = Enum.HorizontalAlignment.Center
+
+    -- 🧱 Container lateral (abas)
     tabButtonsEdge.Name = "tabButtonsEdge"
     tabButtonsEdge.Parent = background
-    tabButtonsEdge.AnchorPoint = Vector2.new(0, 0)
+    tabButtonsEdge.AnchorPoint = Vector2.new(0.5, 0.5)
     tabButtonsEdge.BackgroundColor3 = Color3.fromRGB(35, 0, 0)
-    tabButtonsEdge.Position = UDim2.new(0, 10, 0, 55)
-    tabButtonsEdge.Size = UDim2.new(0, 220, 1, -70) -- 🔥 altura total ajustada
+    tabButtonsEdge.Position = UDim2.new(0.18, 0, 0.56, 0)
+    tabButtonsEdge.Size = UDim2.new(0, 200, 0, 480)
 
-    tabButtonCorner.CornerRadius = UDim.new(0, 4)
+    tabButtonCorner.CornerRadius = UDim.new(0, 3)
+    tabButtonCorner.Name = "tabButtonCorner"
     tabButtonCorner.Parent = tabButtonsEdge
 
     tabButtons.Name = "tabButtons"
     tabButtons.Parent = tabButtonsEdge
     tabButtons.AnchorPoint = Vector2.new(0.5, 0.5)
     tabButtons.BackgroundColor3 = Color3.fromRGB(45, 0, 0)
+    tabButtons.ClipsDescendants = true
     tabButtons.Position = UDim2.new(0.5, 0, 0.5, 0)
-    tabButtons.Size = UDim2.new(1, -4, 1, -4)
+    tabButtons.Size = UDim2.new(0, 198, 0, 478)
+
+    tabButtonCorner_2.CornerRadius = UDim.new(0, 3)
+    tabButtonCorner_2.Name = "tabButtonCorner_2"
+    tabButtonCorner_2.Parent = tabButtons
 
     tabButtonsGradient.Color = ColorSequence.new({
         ColorSequenceKeypoint.new(0.00, Color3.fromRGB(60, 0, 0)),
@@ -976,15 +1000,27 @@ function library:Init(key)
     tabButtonsGradient.Rotation = 90
     tabButtonsGradient.Parent = tabButtons
 
-    -- ⚙️ Área de conteúdo (container)
+    tabButtonLayout.Name = "tabButtonLayout"
+    tabButtonLayout.Parent = tabButtons
+    tabButtonLayout.HorizontalAlignment = Enum.HorizontalAlignment.Center
+    tabButtonLayout.SortOrder = Enum.SortOrder.LayoutOrder
+
+    tabButtonPadding.Name = "tabButtonPadding"
+    tabButtonPadding.Parent = tabButtons
+    tabButtonPadding.PaddingBottom = UDim.new(0, 4)
+    tabButtonPadding.PaddingLeft = UDim.new(0, 4)
+    tabButtonPadding.PaddingRight = UDim.new(0, 4)
+    tabButtonPadding.PaddingTop = UDim.new(0, 4)
+
+    -- ⚙️ Container principal
     containerEdge.Name = "containerEdge"
     containerEdge.Parent = background
-    containerEdge.AnchorPoint = Vector2.new(0, 0)
+    containerEdge.AnchorPoint = Vector2.new(0.5, 0.5)
     containerEdge.BackgroundColor3 = Color3.fromRGB(35, 0, 0)
-    containerEdge.Position = UDim2.new(0, 245, 0, 55)
-    containerEdge.Size = UDim2.new(1, -260, 1, -70)
+    containerEdge.Position = UDim2.new(0.65, 0, 0.56, 0)
+    containerEdge.Size = UDim2.new(0, 700, 0, 480)
 
-    tabButtonCorner_3.CornerRadius = UDim.new(0, 4)
+    tabButtonCorner_3.CornerRadius = UDim.new(0, 3)
     tabButtonCorner_3.Parent = containerEdge
 
     container.Name = "container"
@@ -992,7 +1028,10 @@ function library:Init(key)
     container.AnchorPoint = Vector2.new(0.5, 0.5)
     container.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
     container.Position = UDim2.new(0.5, 0, 0.5, 0)
-    container.Size = UDim2.new(1, -6, 1, -6)
+    container.Size = UDim2.new(0, 698, 0, 478)
+
+    containerCorner.CornerRadius = UDim.new(0, 3)
+    containerCorner.Parent = container
 
     containerGradient.Color = ColorSequence.new({
         ColorSequenceKeypoint.new(0.00, Color3.fromRGB(30, 0, 0)),
@@ -1000,6 +1039,7 @@ function library:Init(key)
     })
     containerGradient.Rotation = 90
     containerGradient.Parent = container
+
 
 
     
@@ -3561,6 +3601,7 @@ function library:Init(key)
     return TabLibrary
 end
 return library
+
 
 
 
