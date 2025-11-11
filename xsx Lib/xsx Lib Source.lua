@@ -879,42 +879,79 @@ function library:Init(key)
     screen.Name = "screen"
     screen.Parent = CoreGuiService
     screen.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
-
+    
+    -- 🔳 Moldura principal
     edge.Name = "edge"
     edge.Parent = screen
     edge.AnchorPoint = Vector2.new(0.5, 0.5)
-    edge.BackgroundColor3 = Color3.fromRGB(60, 60, 60)
+    edge.BackgroundColor3 = Color3.fromRGB(15, 15, 15) -- fundo bem escuro
+    edge.BorderSizePixel = 0
     edge.Position = UDim2.new(0.5, 0, 0.5, 0)
     edge.Size = UDim2.new(0, 594, 0, 406)
-
+    
+    -- 🩸 Efeito de brilho vermelho pulsante (opcional)
+    local edgeGlow = Instance.new("UIStroke")
+    edgeGlow.Color = Color3.fromRGB(255, 30, 30)
+    edgeGlow.Thickness = 1.5
+    edgeGlow.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
+    edgeGlow.Transparency = 0.15
+    edgeGlow.Parent = edge
+    
+    -- 💢 Leve sombra vermelha ao redor
+    local edgeShadow = Instance.new("ImageLabel")
+    edgeShadow.Name = "edgeShadow"
+    edgeShadow.Parent = edge
+    edgeShadow.AnchorPoint = Vector2.new(0.5, 0.5)
+    edgeShadow.Position = UDim2.new(0.5, 0, 0.5, 0)
+    edgeShadow.Size = UDim2.new(1.1, 0, 1.1, 0)
+    edgeShadow.ZIndex = -1
+    edgeShadow.Image = "rbxassetid://5028857472"
+    edgeShadow.ImageColor3 = Color3.fromRGB(255, 0, 0)
+    edgeShadow.ImageTransparency = 0.8
+    edgeShadow.ScaleType = Enum.ScaleType.Slice
+    edgeShadow.SliceCenter = Rect.new(24, 24, 276, 276)
+    edgeShadow.BackgroundTransparency = 1
+    
+    -- 🔻 Permite arrastar
     drag(edge, 0.04)
+    
     local CanChangeVisibility = true
     UserInputService.InputBegan:Connect(function(input)
         if CanChangeVisibility and input.KeyCode == key then
             edge.Visible = not edge.Visible
         end
     end)
-
-    edgeCorner.CornerRadius = UDim.new(0, 2)
+    
+    -- 🟥 Cantos arredondados da borda
+    edgeCorner.CornerRadius = UDim.new(0, 4)
     edgeCorner.Name = "edgeCorner"
     edgeCorner.Parent = edge
-
+    
+    -- ⚫ Fundo interno principal
     background.Name = "background"
     background.Parent = edge
     background.AnchorPoint = Vector2.new(0.5, 0.5)
-    background.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+    background.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
+    background.BorderSizePixel = 0
     background.Position = UDim2.new(0.5, 0, 0.5, 0)
     background.Size = UDim2.new(0, 592, 0, 404)
     background.ClipsDescendants = true
-
-    backgroundCorner.CornerRadius = UDim.new(0, 2)
+    
+    -- 🩶 Cantos do background
+    backgroundCorner.CornerRadius = UDim.new(0, 4)
     backgroundCorner.Name = "backgroundCorner"
     backgroundCorner.Parent = background
-
-    backgroundGradient.Color = ColorSequence.new{ColorSequenceKeypoint.new(0.00, Color3.fromRGB(34, 34, 34)), ColorSequenceKeypoint.new(1.00, Color3.fromRGB(28, 28, 28))}
+    
+    -- 🔥 Gradiente vermelho-escuro elegante
+    backgroundGradient.Color = ColorSequence.new({
+        ColorSequenceKeypoint.new(0.00, Color3.fromRGB(30, 30, 30)),
+        ColorSequenceKeypoint.new(0.45, Color3.fromRGB(60, 0, 0)),
+        ColorSequenceKeypoint.new(1.00, Color3.fromRGB(15, 15, 15))
+    })
     backgroundGradient.Rotation = 90
     backgroundGradient.Name = "backgroundGradient"
     backgroundGradient.Parent = background
+  
 
     headerLabel.Name = "headerLabel"
     headerLabel.Parent = background
@@ -3535,3 +3572,4 @@ function library:Init(key)
     return TabLibrary
 end
 return library
+
