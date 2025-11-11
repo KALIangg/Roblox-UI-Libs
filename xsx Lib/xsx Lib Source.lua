@@ -1041,86 +1041,91 @@ function library:Init(key)
     CreateTween("tab_text_colour", 0.16)
     function TabLibrary:NewTab(title)
         title = title or "tab"
-
+    
         local tabButton = Instance.new("TextButton")
         local page = Instance.new("ScrollingFrame")
         local pageLayout = Instance.new("UIListLayout")
         local pagePadding = Instance.new("UIPadding")
-
+    
+        -- 🔘 Botão da aba
         tabButton.Name = "tabButton"
         tabButton.Parent = tabButtons
-        tabButton.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-        tabButton.BackgroundTransparency = 1.000
-        tabButton.ClipsDescendants = true
-        tabButton.Position = UDim2.new(-0.0281690136, 0, 0, 0)
-        tabButton.Size = UDim2.new(0, 150, 0, 22)
+        tabButton.BackgroundTransparency = 1
+        tabButton.Size = UDim2.new(1, -8, 0, 26)
         tabButton.AutoButtonColor = false
         tabButton.Font = Enum.Font.Code
         tabButton.Text = title
         tabButton.TextColor3 = Color3.fromRGB(170, 170, 170)
-        tabButton.TextSize = 15.000
+        tabButton.TextSize = 15
         tabButton.RichText = true
-
+    
+        -- 📜 Conteúdo da aba
         page.Name = "page"
         page.Parent = container
         page.Active = true
-        page.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-        page.BackgroundTransparency = 1.000
+        page.BackgroundTransparency = 1
         page.BorderSizePixel = 0
-        page.Size = UDim2.new(0, 412, 0, 358)
+        page.Size = UDim2.new(1, 0, 1, 0)
         page.BottomImage = "http://www.roblox.com/asset/?id=3062506202"
         page.MidImage = "http://www.roblox.com/asset/?id=3062506202"
-        page.ScrollBarThickness = 1
+        page.ScrollBarThickness = 4
         page.TopImage = "http://www.roblox.com/asset/?id=3062506202"
-        page.ScrollBarImageColor3 = Color3.fromRGB(159, 115, 255)
+        page.ScrollBarImageColor3 = Color3.fromRGB(255, 60, 60)
         page.Visible = false
-        
+    
+        -- Layout interno
         pageLayout.Name = "pageLayout"
         pageLayout.Parent = page
-        pageLayout.HorizontalAlignment = Enum.HorizontalAlignment.Center
+        pageLayout.HorizontalAlignment = Enum.HorizontalAlignment.Left
         pageLayout.SortOrder = Enum.SortOrder.LayoutOrder
         pageLayout.Padding = UDim.new(0, 4)
-
+    
+        -- Padding do conteúdo
         pagePadding.Name = "pagePadding"
         pagePadding.Parent = page
         pagePadding.PaddingBottom = UDim.new(0, 6)
-        pagePadding.PaddingLeft = UDim.new(0, 6)
-        pagePadding.PaddingRight = UDim.new(0, 6)
+        pagePadding.PaddingLeft = UDim.new(0, 12)
+        pagePadding.PaddingRight = UDim.new(0, 12)
         pagePadding.PaddingTop = UDim.new(0, 6)
-
+    
+        -- 📜 Auto Scroll dinâmico
+        local function UpdatePageSize()
+            local contentSize = pageLayout.AbsoluteContentSize
+            page.CanvasSize = UDim2.new(0, contentSize.X + 15, 0, contentSize.Y + 15)
+        end
+    
+        pageLayout:GetPropertyChangedSignal("AbsoluteContentSize"):Connect(UpdatePageSize)
+        page.ChildAdded:Connect(UpdatePageSize)
+        page.ChildRemoved:Connect(UpdatePageSize)
+        task.defer(UpdatePageSize)
+    
+        -- Primeira aba aberta automaticamente
         if TabLibrary.IsFirst then
             page.Visible = true
-            tabButton.TextColor3 = Color3.fromRGB(159, 115, 255)
+            tabButton.TextColor3 = Color3.fromRGB(255, 60, 60)
             TabLibrary.CurrentTab = title
         end
-        
+    
+        -- 🔁 Mudança de aba
         tabButton.MouseButton1Click:Connect(function()
             TabLibrary.CurrentTab = title
-            for i,v in pairs(container:GetChildren()) do 
+            for _,v in pairs(container:GetChildren()) do
                 if v:IsA("ScrollingFrame") then
                     v.Visible = false
                 end
             end
             page.Visible = true
-
-            for i,v in pairs(tabButtons:GetChildren()) do
+    
+            for _,v in pairs(tabButtons:GetChildren()) do
                 if v:IsA("TextButton") then
                     TweenService:Create(v, TweenTable["tab_text_colour"], {TextColor3 = Color3.fromRGB(170, 170, 170)}):Play()
                 end
             end
-            TweenService:Create(tabButton, TweenTable["tab_text_colour"], {TextColor3 = Color3.fromRGB(159, 115, 255)}):Play()
+            TweenService:Create(tabButton, TweenTable["tab_text_colour"], {TextColor3 = Color3.fromRGB(255, 60, 60)}):Play()
         end)
-
-        local function UpdatePageSize()
-            local correction = pageLayout.AbsoluteContentSize
-            page.CanvasSize = UDim2.new(0, correction.X+13, 0, correction.Y+13)
-        end
-
-        page.ChildAdded:Connect(UpdatePageSize)
-        page.ChildRemoved:Connect(UpdatePageSize)
-
+    
         TabLibrary.IsFirst = false
-
+    
         CreateTween("hover", 0.16)
         local Components = {}
         function Components:NewLabel(text, alignment)
@@ -3589,3 +3594,4 @@ function library:Init(key)
     return TabLibrary
 end
 return library
+
