@@ -291,7 +291,7 @@ function library:Watermark(text)
     waterText.Size = UDim2.new(0, 0, 0, 24)
     waterText.Font = Enum.Font.Code
     waterText.Text = text
-    waterText.TextColor3 = Color3.fromRGB(255, 0, 0)
+    waterText.TextColor3 = Color3.fromRGB(198, 198, 198)
     waterText.TextTransparency = 1
     waterText.TextSize = 14.000
     waterText.RichText = true
@@ -396,7 +396,7 @@ function library:Watermark(text)
         waterText.Size = UDim2.new(0, 0, 0, 24)
         waterText.Font = Enum.Font.Code
         waterText.Text = text
-        waterText.TextColor3 = Color3.fromRGB(255, 0, 0)
+        waterText.TextColor3 = Color3.fromRGB(198, 198, 198)
         waterText.TextTransparency = 1
         waterText.TextSize = 14.000
         waterText.RichText = true
@@ -759,7 +759,7 @@ function library:Introduction()
     xsxLogo.Size = UDim2.new(0, 448, 0, 150)
     xsxLogo.Visible = true
     xsxLogo.Image = "http://www.roblox.com/asset/?id=9365068051"
-    xsxLogo.ImageColor3 = Color3.fromRGB(255, 0, 0)
+    xsxLogo.ImageColor3 = Color3.fromRGB(159, 115, 255)
     xsxLogo.ImageTransparency = 1
     
     hashLogo.Name = "hashLogo"
@@ -771,7 +771,7 @@ function library:Introduction()
     hashLogo.Size = UDim2.new(0, 150, 0, 150)
     hashLogo.Visible = true
     hashLogo.Image = "http://www.roblox.com/asset/?id=9365069861"
-    hashLogo.ImageColor3 = Color3.fromRGB(255, 0, 0)
+    hashLogo.ImageColor3 = Color3.fromRGB(159, 115, 255)
     hashLogo.ImageTransparency = 1
     
     xsx.Name = "xsx"
@@ -780,8 +780,8 @@ function library:Introduction()
     xsx.BackgroundTransparency = 1.000
     xsx.Size = UDim2.new(0, 80, 0, 21)
     xsx.Font = Enum.Font.Code
-    xsx.Text = "powered by Poze Nigga"
-    xsx.TextColor3 = Color3.fromRGB(255, 0, 0)
+    xsx.Text = "powered by xsx"
+    xsx.TextColor3 = Color3.fromRGB(124, 124, 124)
     xsx.TextSize = 10.000
     xsx.TextTransparency = 1
     
@@ -875,201 +875,225 @@ function library:Init(key)
     local container = Instance.new("Frame")
     local containerCorner = Instance.new("UICorner")
     local containerGradient = Instance.new("UIGradient")
-    
+
+    -- 🟥 GUI principal
     screen.Name = "screen"
     screen.Parent = CoreGuiService
     screen.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
-    
-    -- 🔳 Moldura principal
+
+    -- 🔳 Moldura principal (borda externa)
     edge.Name = "edge"
     edge.Parent = screen
     edge.AnchorPoint = Vector2.new(0.5, 0.5)
     edge.BackgroundColor3 = Color3.fromRGB(15, 15, 15)
-    edge.BorderSizePixel = 0
     edge.Position = UDim2.new(0.5, 0, 0.5, 0)
     edge.Size = UDim2.new(0, 1000, 0, 600)
-    
+
+    -- 🔴 Brilho da borda
     local edgeStroke = Instance.new("UIStroke")
     edgeStroke.Color = Color3.fromRGB(255, 0, 0)
-    edgeStroke.Thickness = 1.4
+    edgeStroke.Thickness = 1.3
     edgeStroke.Transparency = 0.15
+    edgeStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
     edgeStroke.Parent = edge
-    
+
     drag(edge, 0.04)
-    
     local CanChangeVisibility = true
     UserInputService.InputBegan:Connect(function(input)
-    	if CanChangeVisibility and input.KeyCode == key then
-    		edge.Visible = not edge.Visible
-    	end
+        if CanChangeVisibility and input.KeyCode == key then
+            edge.Visible = not edge.Visible
+        end
     end)
-    
+
     edgeCorner.CornerRadius = UDim.new(0, 4)
+    edgeCorner.Name = "edgeCorner"
     edgeCorner.Parent = edge
-    
+
     -- ⚫ Fundo interno principal
     background.Name = "background"
     background.Parent = edge
     background.AnchorPoint = Vector2.new(0.5, 0.5)
-    background.BackgroundColor3 = Color3.fromRGB(20, 20, 20)
-    background.BorderSizePixel = 0
+    background.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
     background.Position = UDim2.new(0.5, 0, 0.5, 0)
-    background.Size = UDim2.new(0, 1000, 0, 600)
+    background.Size = UDim2.new(0, 996, 0, 596)
+    background.BorderSizePixel = 0
     background.ClipsDescendants = true
-    
+
     backgroundCorner.CornerRadius = UDim.new(0, 4)
     backgroundCorner.Parent = background
-    
+
+    -- 🔥 Gradiente dark vermelho
     backgroundGradient.Color = ColorSequence.new({
-    	ColorSequenceKeypoint.new(0.00, Color3.fromRGB(30, 0, 0)),
-    	ColorSequenceKeypoint.new(0.45, Color3.fromRGB(25, 25, 25)),
-    	ColorSequenceKeypoint.new(1.00, Color3.fromRGB(40, 0, 0))
+        ColorSequenceKeypoint.new(0.00, Color3.fromRGB(30, 0, 0)),
+        ColorSequenceKeypoint.new(0.50, Color3.fromRGB(25, 25, 25)),
+        ColorSequenceKeypoint.new(1.00, Color3.fromRGB(40, 0, 0))
     })
     backgroundGradient.Rotation = 90
+    backgroundGradient.Name = "backgroundGradient"
     backgroundGradient.Parent = background
-    
-    -- 🔴 Header (título superior)
+
+    -- 🩸 Header
     headerLabel.Name = "headerLabel"
     headerLabel.Parent = background
     headerLabel.BackgroundTransparency = 1
-    headerLabel.Size = UDim2.new(0, 1000, 0, 600)
+    headerLabel.Size = UDim2.new(0, 996, 0, 40)
     headerLabel.Font = Enum.Font.Code
     headerLabel.Text = title
-    headerLabel.TextColor3 = Color3.fromRGB(255, 60, 60)
-    headerLabel.TextSize = 16
+    headerLabel.TextColor3 = Color3.fromRGB(255, 70, 70)
+    headerLabel.TextSize = 17
     headerLabel.TextXAlignment = Enum.TextXAlignment.Left
     headerLabel.RichText = true
-    
+
+    headerPadding.Name = "headerPadding"
     headerPadding.Parent = headerLabel
     headerPadding.PaddingBottom = UDim.new(0, 6)
-    headerPadding.PaddingLeft = UDim.new(0, 12)
+    headerPadding.PaddingLeft = UDim.new(0, 14)
     headerPadding.PaddingTop = UDim.new(0, 6)
-    
-    -- 🔻 Linha divisória vermelha
+
+    -- 🔻 Linha separadora vermelha
+    barFolder.Name = "barFolder"
     barFolder.Parent = background
+
     bar.Name = "bar"
     bar.Parent = barFolder
     bar.BackgroundColor3 = Color3.fromRGB(255, 0, 0)
-    bar.BackgroundTransparency = 0.3
-    bar.Size = UDim2.new(0, 1000, 0, 600)
+    bar.BackgroundTransparency = 0.25
+    bar.Size = UDim2.new(0, 996, 0, 1)
     bar.BorderSizePixel = 0
-    
+
     barCorner.CornerRadius = UDim.new(0, 2)
+    barCorner.Name = "barCorner"
     barCorner.Parent = bar
-    
+
+    barLayout.Name = "barLayout"
     barLayout.Parent = barFolder
     barLayout.HorizontalAlignment = Enum.HorizontalAlignment.Center
-    
-    -- 🧱 Container lateral das tabs
+
+    -- 🧱 Container lateral (abas)
     tabButtonsEdge.Name = "tabButtonsEdge"
     tabButtonsEdge.Parent = background
     tabButtonsEdge.AnchorPoint = Vector2.new(0.5, 0.5)
-    tabButtonsEdge.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
-    tabButtonsEdge.Position = UDim2.new(0.18, 0, 0.53, 0) -- posição ajustada
-    tabButtonsEdge.Size = UDim2.new(0, 250, 0, 520) -- largura e altura ampliadas
-    
-    tabButtonCorner.CornerRadius = UDim.new(0, 2)
+    tabButtonsEdge.BackgroundColor3 = Color3.fromRGB(35, 0, 0)
+    tabButtonsEdge.Position = UDim2.new(0.18, 0, 0.56, 0)
+    tabButtonsEdge.Size = UDim2.new(0, 200, 0, 480)
+
+    tabButtonCorner.CornerRadius = UDim.new(0, 3)
+    tabButtonCorner.Name = "tabButtonCorner"
     tabButtonCorner.Parent = tabButtonsEdge
-    
+
     tabButtons.Name = "tabButtons"
     tabButtons.Parent = tabButtonsEdge
     tabButtons.AnchorPoint = Vector2.new(0.5, 0.5)
-    tabButtons.BackgroundColor3 = Color3.fromRGB(35, 0, 0)
+    tabButtons.BackgroundColor3 = Color3.fromRGB(45, 0, 0)
+    tabButtons.ClipsDescendants = true
     tabButtons.Position = UDim2.new(0.5, 0, 0.5, 0)
-    tabButtons.Size = UDim2.new(0, 150, 0, 358)
-    
-    tabButtonCorner_2.CornerRadius = UDim.new(0, 2)
+    tabButtons.Size = UDim2.new(0, 198, 0, 478)
+
+    tabButtonCorner_2.CornerRadius = UDim.new(0, 3)
+    tabButtonCorner_2.Name = "tabButtonCorner_2"
     tabButtonCorner_2.Parent = tabButtons
-    
+
     tabButtonsGradient.Color = ColorSequence.new({
-    	ColorSequenceKeypoint.new(0.00, Color3.fromRGB(50, 0, 0)),
-    	ColorSequenceKeypoint.new(1.00, Color3.fromRGB(25, 0, 0))
+        ColorSequenceKeypoint.new(0.00, Color3.fromRGB(60, 0, 0)),
+        ColorSequenceKeypoint.new(1.00, Color3.fromRGB(25, 0, 0))
     })
     tabButtonsGradient.Rotation = 90
     tabButtonsGradient.Parent = tabButtons
-    
+
+    tabButtonLayout.Name = "tabButtonLayout"
     tabButtonLayout.Parent = tabButtons
     tabButtonLayout.HorizontalAlignment = Enum.HorizontalAlignment.Center
-    
+    tabButtonLayout.SortOrder = Enum.SortOrder.LayoutOrder
+
+    tabButtonPadding.Name = "tabButtonPadding"
     tabButtonPadding.Parent = tabButtons
+    tabButtonPadding.PaddingBottom = UDim.new(0, 4)
+    tabButtonPadding.PaddingLeft = UDim.new(0, 4)
+    tabButtonPadding.PaddingRight = UDim.new(0, 4)
     tabButtonPadding.PaddingTop = UDim.new(0, 4)
-    
-    -- ⚙️ Container principal das páginas
+
+    -- ⚙️ Container principal
     containerEdge.Name = "containerEdge"
     containerEdge.Parent = background
     containerEdge.AnchorPoint = Vector2.new(0.5, 0.5)
-    containerEdge.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
-    containerEdge.Position = UDim2.new(0.67, 0, 0.53, 0) -- ajustado para acompanhar o novo tamanho
-    containerEdge.Size = UDim2.new(0, 680, 0, 520) -- aumente para preencher melhor
+    containerEdge.BackgroundColor3 = Color3.fromRGB(35, 0, 0)
+    containerEdge.Position = UDim2.new(0.65, 0, 0.56, 0)
+    containerEdge.Size = UDim2.new(0, 700, 0, 480)
 
-    
-    tabButtonCorner_3.CornerRadius = UDim.new(0, 2)
+    tabButtonCorner_3.CornerRadius = UDim.new(0, 3)
     tabButtonCorner_3.Parent = containerEdge
-    
+
     container.Name = "container"
     container.Parent = containerEdge
     container.AnchorPoint = Vector2.new(0.5, 0.5)
-    container.BackgroundColor3 = Color3.fromRGB(25, 0, 0)
+    container.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
     container.Position = UDim2.new(0.5, 0, 0.5, 0)
-    container.Size = UDim2.new(0, 412, 0, 358)
-    
-    containerCorner.CornerRadius = UDim.new(0, 2)
+    container.Size = UDim2.new(0, 698, 0, 478)
+
+    containerCorner.CornerRadius = UDim.new(0, 3)
     containerCorner.Parent = container
-    
+
     containerGradient.Color = ColorSequence.new({
-    	ColorSequenceKeypoint.new(0.00, Color3.fromRGB(30, 0, 0)),
-    	ColorSequenceKeypoint.new(1.00, Color3.fromRGB(15, 15, 15))
+        ColorSequenceKeypoint.new(0.00, Color3.fromRGB(30, 0, 0)),
+        ColorSequenceKeypoint.new(1.00, Color3.fromRGB(15, 15, 15))
     })
     containerGradient.Rotation = 90
     containerGradient.Parent = container
-    
-    -- 🧩 Sistema de Tabs
+
+
     local TabLibrary = {
-    	IsFirst = true,
-    	CurrentTab = ""
+        IsFirst = true,
+        CurrentTab = ""
     }
-    
     CreateTween("tab_text_colour", 0.16)
-    
     function TabLibrary:NewTab(title)
-    	title = title or "tab"
-    
-    	local tabButton = Instance.new("TextButton")
-    	local page = Instance.new("ScrollingFrame")
-    	local pageLayout = Instance.new("UIListLayout")
-    	local pagePadding = Instance.new("UIPadding")
-    
-    	tabButton.Name = "tabButton"
-    	tabButton.Parent = tabButtons
-    	tabButton.BackgroundTransparency = 1
-    	tabButton.Size = UDim2.new(0, 150, 0, 22)
-    	tabButton.AutoButtonColor = false
-    	tabButton.Font = Enum.Font.Code
-    	tabButton.Text = title
-    	tabButton.TextColor3 = Color3.fromRGB(220, 220, 220)
-    	tabButton.TextSize = 15
-    	tabButton.RichText = true
-    
-    	page.Name = "page"
-    	page.Parent = container
-    	page.Active = true
-    	page.BackgroundTransparency = 1
-    	page.BorderSizePixel = 0
-    	page.Size = UDim2.new(0, 412, 0, 358)
-    	page.ScrollBarThickness = 1
-    	page.ScrollBarImageColor3 = Color3.fromRGB(255, 0, 0)
-    	page.Visible = false
-    
-    	pageLayout.Parent = page
-    	pageLayout.HorizontalAlignment = Enum.HorizontalAlignment.Center
-    	pageLayout.SortOrder = Enum.SortOrder.LayoutOrder
-    	pageLayout.Padding = UDim.new(0, 4)
-    
-    	pagePadding.Parent = page
-    	pagePadding.PaddingBottom = UDim.new(0, 6)
-    	pagePadding.PaddingLeft = UDim.new(0, 6)
-    	pagePadding.PaddingRight = UDim.new(0, 6)
-    	pagePadding.PaddingTop = UDim.new(0, 6)
+        title = title or "tab"
+
+        local tabButton = Instance.new("TextButton")
+        local page = Instance.new("ScrollingFrame")
+        local pageLayout = Instance.new("UIListLayout")
+        local pagePadding = Instance.new("UIPadding")
+
+        tabButton.Name = "tabButton"
+        tabButton.Parent = tabButtons
+        tabButton.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+        tabButton.BackgroundTransparency = 1.000
+        tabButton.ClipsDescendants = true
+        tabButton.Position = UDim2.new(-0.0281690136, 0, 0, 0)
+        tabButton.Size = UDim2.new(0, 150, 0, 22)
+        tabButton.AutoButtonColor = false
+        tabButton.Font = Enum.Font.Code
+        tabButton.Text = title
+        tabButton.TextColor3 = Color3.fromRGB(170, 170, 170)
+        tabButton.TextSize = 15.000
+        tabButton.RichText = true
+
+        page.Name = "page"
+        page.Parent = container
+        page.Active = true
+        page.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+        page.BackgroundTransparency = 1.000
+        page.BorderSizePixel = 0
+        page.Size = UDim2.new(0, 412, 0, 358)
+        page.BottomImage = "http://www.roblox.com/asset/?id=3062506202"
+        page.MidImage = "http://www.roblox.com/asset/?id=3062506202"
+        page.ScrollBarThickness = 1
+        page.TopImage = "http://www.roblox.com/asset/?id=3062506202"
+        page.ScrollBarImageColor3 = Color3.fromRGB(159, 115, 255)
+        page.Visible = false
+        
+        pageLayout.Name = "pageLayout"
+        pageLayout.Parent = page
+        pageLayout.HorizontalAlignment = Enum.HorizontalAlignment.Center
+        pageLayout.SortOrder = Enum.SortOrder.LayoutOrder
+        pageLayout.Padding = UDim.new(0, 4)
+
+        pagePadding.Name = "pagePadding"
+        pagePadding.Parent = page
+        pagePadding.PaddingBottom = UDim.new(0, 6)
+        pagePadding.PaddingLeft = UDim.new(0, 6)
+        pagePadding.PaddingRight = UDim.new(0, 6)
+        pagePadding.PaddingTop = UDim.new(0, 6)
 
         if TabLibrary.IsFirst then
             page.Visible = true
@@ -1121,7 +1145,7 @@ function library:Init(key)
             label.Size = UDim2.new(0, 396, 0, 24)
             label.Font = Enum.Font.Code
             label.Text = text
-            label.TextColor3 = Color3.fromRGB(255, 0, 0)
+            label.TextColor3 = Color3.fromRGB(190, 190, 190)
             label.TextSize = 14.000
             label.TextWrapped = true
             label.TextXAlignment = Enum.TextXAlignment.Left
@@ -1215,7 +1239,7 @@ function library:Init(key)
             button.AutoButtonColor = false
             button.Font = Enum.Font.SourceSans
             button.Text = ""
-            button.TextColor3 = Color3.fromRGB(255, 0, 0)
+            button.TextColor3 = Color3.fromRGB(0, 0, 0)
             button.TextSize = 14.000
 
             buttonCorner.CornerRadius = UDim.new(0, 2)
@@ -1497,7 +1521,7 @@ function library:Init(key)
             sectionLabel.Font = Enum.Font.Code
             sectionLabel.LineHeight = 1
             sectionLabel.Text = text
-            sectionLabel.TextColor3 = Color3.fromRGB(255, 0, 0)
+            sectionLabel.TextColor3 = Color3.fromRGB(190, 190, 190)
             sectionLabel.TextSize = 14.000
             sectionLabel.TextXAlignment = Enum.TextXAlignment.Left
             sectionLabel.RichText = true
@@ -1576,7 +1600,7 @@ function library:Init(key)
             toggleButton.Size = UDim2.new(0, 396, 0, 22)
             toggleButton.Font = Enum.Font.Code
             toggleButton.Text = ""
-            toggleButton.TextColor3 = Color3.fromRGB(255, 0, 0)
+            toggleButton.TextColor3 = Color3.fromRGB(190, 190, 190)
             toggleButton.TextSize = 14.000
             toggleButton.TextXAlignment = Enum.TextXAlignment.Left
 
@@ -1636,7 +1660,7 @@ function library:Init(key)
             toggleLabel.Font = Enum.Font.Code
             toggleLabel.LineHeight = 1.150
             toggleLabel.Text = text
-            toggleLabel.TextColor3 = Color3.fromRGB(255, 0, 0)
+            toggleLabel.TextColor3 = Color3.fromRGB(190, 190, 190)
             toggleLabel.TextSize = 14.000
             toggleLabel.TextXAlignment = Enum.TextXAlignment.Left
             toggleLabel.RichText = true
@@ -1789,7 +1813,7 @@ function library:Init(key)
                 keybindButtonLabel.Size = UDim2.new(0, 85, 0, 20)
                 keybindButtonLabel.Font = Enum.Font.Code
                 keybindButtonLabel.Text = ". . ."
-                keybindButtonLabel.TextColor3 = Color3.fromRGB(255, 0, 0)
+                keybindButtonLabel.TextColor3 = Color3.fromRGB(190, 190, 190)
                 keybindButtonLabel.TextSize = 14.000
                 keybindButtonLabel.RichText = true
     
@@ -1896,15 +1920,10 @@ function library:Init(key)
         end
 
         function Components:NewKeybind(text, default, callback)
-            local UserInputService = game:GetService("UserInputService")
-            local TextService = game:GetService("TextService")
-            local TweenService = game:GetService("TweenService")
-            local Player = game.Players.LocalPlayer
-        
             text = text or "keybind"
             default = default or Enum.KeyCode.P
             callback = callback or function() end
-        
+
             local keybindFrame = Instance.new("Frame")
             local keybindButton = Instance.new("TextButton")
             local keybindLayout = Instance.new("UIListLayout")
@@ -1921,167 +1940,213 @@ function library:Init(key)
             local keybindLabelStraint = Instance.new("UISizeConstraint")
             local keybindBackgroundStraint = Instance.new("UISizeConstraint")
             local keybindStraint = Instance.new("UISizeConstraint")
-        
+
             keybindFrame.Name = "keybindFrame"
             keybindFrame.Parent = page
             keybindFrame.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-            keybindFrame.BackgroundTransparency = 1
+            keybindFrame.BackgroundTransparency = 1.000
             keybindFrame.ClipsDescendants = true
             keybindFrame.Size = UDim2.new(0, 396, 0, 24)
-        
+
             keybindButton.Name = "keybindButton"
             keybindButton.Parent = keybindFrame
-            keybindButton.BackgroundTransparency = 1
+            keybindButton.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+            keybindButton.BackgroundTransparency = 1.000
             keybindButton.Size = UDim2.new(0, 396, 0, 24)
             keybindButton.AutoButtonColor = false
+            keybindButton.Font = Enum.Font.SourceSans
             keybindButton.Text = ""
-        
+            keybindButton.TextColor3 = Color3.fromRGB(0, 0, 0)
+            keybindButton.TextSize = 14.000
+
+            keybindLayout.Name = "keybindLayout"
             keybindLayout.Parent = keybindButton
             keybindLayout.FillDirection = Enum.FillDirection.Horizontal
             keybindLayout.SortOrder = Enum.SortOrder.LayoutOrder
             keybindLayout.VerticalAlignment = Enum.VerticalAlignment.Center
             keybindLayout.Padding = UDim.new(0, 4)
-        
+
             keybindLabel.Name = "keybindLabel"
             keybindLabel.Parent = keybindButton
-            keybindLabel.BackgroundTransparency = 1
+            keybindLabel.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+            keybindLabel.BackgroundTransparency = 1.000
             keybindLabel.Size = UDim2.new(0, 396, 0, 24)
             keybindLabel.Font = Enum.Font.Code
             keybindLabel.Text = text
-            keybindLabel.TextColor3 = Color3.fromRGB(255, 0, 0)
-            keybindLabel.TextSize = 14
+            keybindLabel.TextColor3 = Color3.fromRGB(190, 190, 190)
+            keybindLabel.TextSize = 14.000
+            keybindLabel.TextWrapped = true
             keybindLabel.TextXAlignment = Enum.TextXAlignment.Left
-        
+            keybindLabel.RichText = true
+
+            keybindPadding.Name = "keybindPadding"
             keybindPadding.Parent = keybindLabel
             keybindPadding.PaddingBottom = UDim.new(0, 6)
             keybindPadding.PaddingLeft = UDim.new(0, 2)
             keybindPadding.PaddingRight = UDim.new(0, 6)
             keybindPadding.PaddingTop = UDim.new(0, 6)
-        
+
+            keybindFolder.Name = "keybindFolder"
             keybindFolder.Parent = keybindFrame
-        
+
+            keybindFolderLayout.Name = "keybindFolderLayout"
             keybindFolderLayout.Parent = keybindFolder
             keybindFolderLayout.FillDirection = Enum.FillDirection.Horizontal
             keybindFolderLayout.HorizontalAlignment = Enum.HorizontalAlignment.Right
-            keybindFolderLayout.VerticalAlignment = Enum.VerticalAlignment.Center
             keybindFolderLayout.SortOrder = Enum.SortOrder.LayoutOrder
+            keybindFolderLayout.VerticalAlignment = Enum.VerticalAlignment.Center
             keybindFolderLayout.Padding = UDim.new(0, 4)
-        
+
             keybind.Name = "keybind"
             keybind.Parent = keybindFolder
             keybind.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+            keybind.Position = UDim2.new(0.780303001, 0, 0, 0)
             keybind.Size = UDim2.new(0, 87, 0, 22)
             keybind.AutoButtonColor = false
+            keybind.Font = Enum.Font.SourceSans
             keybind.Text = ""
-        
+            keybind.TextColor3 = Color3.fromRGB(0, 0, 0)
+            keybind.TextSize = 14.000
+            keybind.Active = false
+
             keybindCorner.CornerRadius = UDim.new(0, 2)
+            keybindCorner.Name = "keybindCorner"
             keybindCorner.Parent = keybind
-        
+
             keybindBackground.Name = "keybindBackground"
             keybindBackground.Parent = keybind
             keybindBackground.AnchorPoint = Vector2.new(0.5, 0.5)
             keybindBackground.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
             keybindBackground.Position = UDim2.new(0.5, 0, 0.5, 0)
             keybindBackground.Size = UDim2.new(0, 85, 0, 20)
-        
-            keybindGradient.Color = ColorSequence.new{
-                ColorSequenceKeypoint.new(0, Color3.fromRGB(34, 34, 34)),
-                ColorSequenceKeypoint.new(1, Color3.fromRGB(28, 28, 28))
-            }
+
+            keybindGradient.Color = ColorSequence.new{ColorSequenceKeypoint.new(0.00, Color3.fromRGB(34, 34, 34)), ColorSequenceKeypoint.new(1.00, Color3.fromRGB(28, 28, 28))}
             keybindGradient.Rotation = 90
+            keybindGradient.Name = "keybindGradient"
             keybindGradient.Parent = keybindBackground
-        
+
             keybindBackCorner.CornerRadius = UDim.new(0, 2)
+            keybindBackCorner.Name = "keybindBackCorner"
             keybindBackCorner.Parent = keybindBackground
-        
+
             keybindButtonLabel.Name = "keybindButtonLabel"
             keybindButtonLabel.Parent = keybindBackground
             keybindButtonLabel.AnchorPoint = Vector2.new(0.5, 0.5)
-            keybindButtonLabel.BackgroundTransparency = 1
+            keybindButtonLabel.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+            keybindButtonLabel.BackgroundTransparency = 1.000
+            keybindButtonLabel.ClipsDescendants = true
             keybindButtonLabel.Position = UDim2.new(0.5, 0, 0.5, 0)
             keybindButtonLabel.Size = UDim2.new(0, 85, 0, 20)
             keybindButtonLabel.Font = Enum.Font.Code
-            keybindButtonLabel.TextColor3 = Color3.fromRGB(255, 0, 0)
-            keybindButtonLabel.TextSize = 14
-            keybindButtonLabel.Text = default.Name
-        
+            keybindButtonLabel.Text = ". . ."
+            keybindButtonLabel.TextColor3 = Color3.fromRGB(190, 190, 190)
+            keybindButtonLabel.TextSize = 14.000
+            keybindButtonLabel.RichText = true
+
+            keybindLabelStraint.Name = "keybindLabelStraint"
             keybindLabelStraint.Parent = keybindButtonLabel
             keybindLabelStraint.MinSize = Vector2.new(28, 20)
+
+            keybindBackgroundStraint.Name = "keybindBackgroundStraint"
             keybindBackgroundStraint.Parent = keybindBackground
             keybindBackgroundStraint.MinSize = Vector2.new(28, 20)
+
+            keybindStraint.Name = "keybindStraint"
             keybindStraint.Parent = keybind
             keybindStraint.MinSize = Vector2.new(30, 22)
-        
-            local ChosenKey = default
-        
-            local function ResizeKeybind()
-                local size = TextService:GetTextSize(keybindButtonLabel.Text, 14, Enum.Font.Code, Vector2.new(math.huge, math.huge))
-                keybindButtonLabel.Size = UDim2.new(0, size.X + 6, 0, 20)
-                keybindBackground.Size = UDim2.new(0, size.X + 6, 0, 20)
-                keybind.Size = UDim2.new(0, size.X + 8, 0, 22)
+
+            local Shortcuts = {
+                Return = "enter"
+            }
+
+            keybindButtonLabel.Text = Shortcuts[default.Name] or default.Name
+            CreateTween("keybind", 0.08)
+            
+            local NewKeybindSize = TextService:GetTextSize(keybindButtonLabel.Text, keybindButtonLabel.TextSize, keybindButtonLabel.Font, Vector2.new(math.huge,math.huge))
+            keybindButtonLabel.Size = UDim2.new(0, NewKeybindSize.X + 6, 0, 20)
+            keybindBackground.Size = UDim2.new(0, NewKeybindSize.X + 6, 0, 20)
+            keybind.Size = UDim2.new(0, NewKeybindSize.X + 8, 0, 22)
+            
+            function ResizeKeybind()
+                NewKeybindSize = TextService:GetTextSize(keybindButtonLabel.Text, keybindButtonLabel.TextSize, keybindButtonLabel.Font, Vector2.new(math.huge,math.huge))
+                TweenService:Create(keybindButtonLabel, TweenTable["keybind"], {Size = UDim2.new(0, NewKeybindSize.X + 6, 0, 20)}):Play()
+                TweenService:Create(keybindBackground, TweenTable["keybind"], {Size = UDim2.new(0, NewKeybindSize.X + 6, 0, 20)}):Play()
+                TweenService:Create(keybind, TweenTable["keybind"], {Size = UDim2.new(0, NewKeybindSize.X + 8, 0, 22)}):Play()
             end
+            keybindButtonLabel:GetPropertyChangedSignal("Text"):Connect(ResizeKeybind)
             ResizeKeybind()
-        
-            local function captureKey()
+
+            local ChosenKey = default
+            keybindButton.MouseButton1Click:Connect(function()
                 keybindButtonLabel.Text = "..."
-                local input = UserInputService.InputBegan:Wait()
-                if input.KeyCode and input.KeyCode ~= Enum.KeyCode.Unknown then
-                    ChosenKey = input.KeyCode
-                    keybindButtonLabel.Text = input.KeyCode.Name
-                    ResizeKeybind()
-                end
-            end
-        
-            keybindButton.MouseButton1Click:Connect(captureKey)
-            keybind.MouseButton1Click:Connect(captureKey)
-        
-            -- Safe keybind detection
-            UserInputService.InputBegan:Connect(function(input, processed)
-                if not processed and input.KeyCode == ChosenKey then
-                    local focusedBox = UserInputService:GetFocusedTextBox()
-                    if not focusedBox then
-                        callback(ChosenKey)
-                    end
+                local InputWait = UserInputService.InputBegan:wait()
+                if UserInputService.WindowFocused and InputWait.KeyCode.Name ~= "Unknown" then
+                    local Result = Shortcuts[InputWait.KeyCode.Name] or InputWait.KeyCode.Name
+                    keybindButtonLabel.Text = Result
+                    ChosenKey = InputWait.KeyCode.Name
                 end
             end)
-        
+
+            keybind.MouseButton1Click:Connect(function()
+                keybindButtonLabel.Text = ". . ."
+                local InputWait = UserInputService.InputBegan:wait()
+                if UserInputService.WindowFocused and InputWait.KeyCode.Name ~= "Unknown" then
+                    local Result = Shortcuts[InputWait.KeyCode.Name] or InputWait.KeyCode.Name
+                    keybindButtonLabel.Text = Result
+                    ChosenKey = InputWait.KeyCode.Name
+                end
+            end)
+
+            local ChatTextBox = Player.PlayerGui.Chat.Frame.ChatBarParentFrame.Frame.BoxFrame.Frame.ChatBar
+            if UserInputService.WindowFocused then
+                UserInputService.InputBegan:Connect(function(c, p)
+                    if not p then
+                        if c.KeyCode.Name == ChosenKey and not ChatTextBox:IsFocused() then
+                            callback(ChosenKey)
+                            return
+                        end
+                    end
+                end)
+            end
+
+            UpdatePageSize()
+
             local KeybindFunctions = {}
-        
             function KeybindFunctions:Fire()
                 callback(ChosenKey)
-                return self
+                return KeybindFunctions
             end
-        
+            --
             function KeybindFunctions:SetFunction(new)
-                callback = new or function() end
-                return self
+                new = new or function() end
+                callback = new
+                return KeybindFunctions 
             end
-        
-            function KeybindFunctions:SetKey(newKey)
-                ChosenKey = newKey or ChosenKey
-                keybindButtonLabel.Text = ChosenKey.Name
-                ResizeKeybind()
-                return self
+            --
+            function KeybindFunctions:SetKey(new)
+                new = new or ChosenKey.Name
+                ChosenKey = new.Name
+                keybindButtonLabel.Text = new.Name
+                return KeybindFunctions
             end
-        
-            function KeybindFunctions:Text(newText)
-                keybindLabel.Text = newText or keybindLabel.Text
-                return self
+            --
+            function KeybindFunctions:Text(new)
+                new = new or keybindLabel.Text
+                keybindLabel.Text = new
+                return KeybindFunctions
             end
-        
+            --
             function KeybindFunctions:Hide()
                 keybindFrame.Visible = false
-                return self
+                return KeybindFunctions
             end
-        
+            --
             function KeybindFunctions:Show()
                 keybindFrame.Visible = true
-                return self
+                return KeybindFunctions
             end
-        
             return KeybindFunctions
         end
-
         --
         function Components:NewTextbox(text, default, place, format, type, autoexec, autoclear, callback)
             text = text or "text box"
@@ -2177,7 +2242,7 @@ function library:Init(key)
                 textBoxValues.PlaceholderColor3 = Color3.fromRGB(140, 140, 140)
                 textBoxValues.PlaceholderText = place
                 textBoxValues.Text = ""
-                textBoxValues.TextColor3 = Color3.fromRGB(255, 0, 0)
+                textBoxValues.TextColor3 = Color3.fromRGB(190, 190, 190)
                 textBoxValues.TextSize = 14.000
                 textBoxValues.ClearTextOnFocus = autoclear
                 textBoxValues.ClipsDescendants = true
@@ -2207,7 +2272,7 @@ function library:Init(key)
                 textboxLabel.Size = UDim2.new(0, 396, 0, 24)
                 textboxLabel.Font = Enum.Font.Code
                 textboxLabel.Text = text
-                textboxLabel.TextColor3 = Color3.fromRGB(255, 0, 0)
+                textboxLabel.TextColor3 = Color3.fromRGB(190, 190, 190)
                 textboxLabel.TextSize = 14.000
                 textboxLabel.TextWrapped = true
                 textboxLabel.TextXAlignment = Enum.TextXAlignment.Left
@@ -3531,8 +3596,3 @@ function library:Init(key)
     return TabLibrary
 end
 return library
-
-
-
-
-
