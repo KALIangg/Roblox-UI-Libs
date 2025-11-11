@@ -291,7 +291,7 @@ function library:Watermark(text)
     waterText.Size = UDim2.new(0, 0, 0, 24)
     waterText.Font = Enum.Font.Code
     waterText.Text = text
-    waterText.TextColor3 = Color3.fromRGB(198, 198, 198)
+    waterText.TextColor3 = Color3.fromRGB(255, 0, 0)
     waterText.TextTransparency = 1
     waterText.TextSize = 14.000
     waterText.RichText = true
@@ -396,7 +396,7 @@ function library:Watermark(text)
         waterText.Size = UDim2.new(0, 0, 0, 24)
         waterText.Font = Enum.Font.Code
         waterText.Text = text
-        waterText.TextColor3 = Color3.fromRGB(198, 198, 198)
+        waterText.TextColor3 = Color3.fromRGB(255, 0, 0)
         waterText.TextTransparency = 1
         waterText.TextSize = 14.000
         waterText.RichText = true
@@ -604,7 +604,7 @@ function library:InitNotifications(text, duration, callback)
         notifText.Size = UDim2.new(0, 230, 0, 26)
         notifText.Font = Enum.Font.Code
         notifText.Text = text
-        notifText.TextColor3 = Color3.fromRGB(198, 198, 198)
+        notifText.TextColor3 = Color3.fromRGB(255, 0, 0)
         notifText.TextSize = 14.000
         notifText.TextTransparency = 1.000
         notifText.TextXAlignment = Enum.TextXAlignment.Left
@@ -759,7 +759,7 @@ function library:Introduction()
     xsxLogo.Size = UDim2.new(0, 448, 0, 150)
     xsxLogo.Visible = true
     xsxLogo.Image = "http://www.roblox.com/asset/?id=9365068051"
-    xsxLogo.ImageColor3 = Color3.fromRGB(159, 115, 255)
+    xsxLogo.ImageColor3 = Color3.fromRGB(255, 0, 0)
     xsxLogo.ImageTransparency = 1
     
     hashLogo.Name = "hashLogo"
@@ -771,7 +771,7 @@ function library:Introduction()
     hashLogo.Size = UDim2.new(0, 150, 0, 150)
     hashLogo.Visible = true
     hashLogo.Image = "http://www.roblox.com/asset/?id=9365069861"
-    hashLogo.ImageColor3 = Color3.fromRGB(159, 115, 255)
+    hashLogo.ImageColor3 = Color3.fromRGB(255, 0, 0)
     hashLogo.ImageTransparency = 1
     
     xsx.Name = "xsx"
@@ -780,8 +780,8 @@ function library:Introduction()
     xsx.BackgroundTransparency = 1.000
     xsx.Size = UDim2.new(0, 80, 0, 21)
     xsx.Font = Enum.Font.Code
-    xsx.Text = "powered by xsx"
-    xsx.TextColor3 = Color3.fromRGB(124, 124, 124)
+    xsx.Text = "powered by Poze"
+    xsx.TextColor3 = Color3.fromRGB(255, 0, 0)
     xsx.TextSize = 10.000
     xsx.TextTransparency = 1
     
@@ -793,7 +793,7 @@ function library:Introduction()
     text.Size = UDim2.new(0, 26, 0, 21)
     text.Font = Enum.Font.Code
     text.Text = "hash"
-    text.TextColor3 = Color3.fromRGB(124, 124, 124)
+    text.TextColor3 = Color3.fromRGB(255, 0, 0)
     text.TextSize = 10.000
     text.TextTransparency = 1
     text.RichText = true
@@ -1064,7 +1064,7 @@ function library:Init(key)
         tabButton.AutoButtonColor = false
         tabButton.Font = Enum.Font.Code
         tabButton.Text = title
-        tabButton.TextColor3 = Color3.fromRGB(170, 170, 170)
+        tabButton.TextColor3 = Color3.fromRGB(255, 70, 70)
         tabButton.TextSize = 15.000
         tabButton.RichText = true
 
@@ -1145,7 +1145,7 @@ function library:Init(key)
             label.Size = UDim2.new(0, 396, 0, 24)
             label.Font = Enum.Font.Code
             label.Text = text
-            label.TextColor3 = Color3.fromRGB(190, 190, 190)
+            label.TextColor3 = Color3.fromRGB(255, 70, 70)
             label.TextSize = 14.000
             label.TextWrapped = true
             label.TextXAlignment = Enum.TextXAlignment.Left
@@ -1239,7 +1239,7 @@ function library:Init(key)
             button.AutoButtonColor = false
             button.Font = Enum.Font.SourceSans
             button.Text = ""
-            button.TextColor3 = Color3.fromRGB(0, 0, 0)
+            button.TextColor3 = Color3.fromRGB(255, 70, 70)
             button.TextSize = 14.000
 
             buttonCorner.CornerRadius = UDim.new(0, 2)
@@ -1272,7 +1272,7 @@ function library:Init(key)
             buttonLabel.Size = UDim2.new(0, 394, 0, 22)
             buttonLabel.Font = Enum.Font.Code
             buttonLabel.Text = text
-            buttonLabel.TextColor3 = Color3.fromRGB(190, 190, 190)
+            buttonLabel.TextColor3 = Color3.fromRGB(255, 70, 70)
             buttonLabel.TextSize = 14.000
             buttonLabel.RichText = true
 
@@ -1343,7 +1343,7 @@ function library:Init(key)
                     button.AutoButtonColor = false
                     button.Font = Enum.Font.SourceSans
                     button.Text = ""
-                    button.TextColor3 = Color3.fromRGB(0, 0, 0)
+                    button.TextColor3 = Color3.fromRGB(255, 70, 70)
                     button.TextSize = 14.000
         
                     buttonCorner.CornerRadius = UDim.new(0, 2)
@@ -1376,7 +1376,7 @@ function library:Init(key)
                     buttonLabel.Size = UDim2.new(0, NewSizeX - 2, 0, 22)
                     buttonLabel.Font = Enum.Font.Code
                     buttonLabel.Text = text
-                    buttonLabel.TextColor3 = Color3.fromRGB(190, 190, 190)
+                    buttonLabel.TextColor3 = Color3.fromRGB(255, 70, 70)
                     buttonLabel.TextSize = 14.000
                     buttonLabel.RichText = true
 
@@ -1521,7 +1521,7 @@ function library:Init(key)
             sectionLabel.Font = Enum.Font.Code
             sectionLabel.LineHeight = 1
             sectionLabel.Text = text
-            sectionLabel.TextColor3 = Color3.fromRGB(190, 190, 190)
+            sectionLabel.TextColor3 = Color3.fromRGB(255, 70, 70)
             sectionLabel.TextSize = 14.000
             sectionLabel.TextXAlignment = Enum.TextXAlignment.Left
             sectionLabel.RichText = true
@@ -1600,7 +1600,7 @@ function library:Init(key)
             toggleButton.Size = UDim2.new(0, 396, 0, 22)
             toggleButton.Font = Enum.Font.Code
             toggleButton.Text = ""
-            toggleButton.TextColor3 = Color3.fromRGB(190, 190, 190)
+            toggleButton.TextColor3 = Color3.fromRGB(255, 70, 70)
             toggleButton.TextSize = 14.000
             toggleButton.TextXAlignment = Enum.TextXAlignment.Left
 
@@ -1660,7 +1660,7 @@ function library:Init(key)
             toggleLabel.Font = Enum.Font.Code
             toggleLabel.LineHeight = 1.150
             toggleLabel.Text = text
-            toggleLabel.TextColor3 = Color3.fromRGB(190, 190, 190)
+            toggleLabel.TextColor3 = Color3.fromRGB(255, 70, 70)
             toggleLabel.TextSize = 14.000
             toggleLabel.TextXAlignment = Enum.TextXAlignment.Left
             toggleLabel.RichText = true
@@ -1956,7 +1956,7 @@ function library:Init(key)
             keybindButton.AutoButtonColor = false
             keybindButton.Font = Enum.Font.SourceSans
             keybindButton.Text = ""
-            keybindButton.TextColor3 = Color3.fromRGB(0, 0, 0)
+            keybindButton.TextColor3 = Color3.fromRGB(255, 70, 70)
             keybindButton.TextSize = 14.000
 
             keybindLayout.Name = "keybindLayout"
@@ -2242,7 +2242,7 @@ function library:Init(key)
                 textBoxValues.PlaceholderColor3 = Color3.fromRGB(140, 140, 140)
                 textBoxValues.PlaceholderText = place
                 textBoxValues.Text = ""
-                textBoxValues.TextColor3 = Color3.fromRGB(190, 190, 190)
+                textBoxValues.TextColor3 = Color3.fromRGB(255, 70, 70)
                 textBoxValues.TextSize = 14.000
                 textBoxValues.ClearTextOnFocus = autoclear
                 textBoxValues.ClipsDescendants = true
@@ -3596,3 +3596,4 @@ function library:Init(key)
     return TabLibrary
 end
 return library
+
