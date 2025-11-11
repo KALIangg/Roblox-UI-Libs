@@ -875,7 +875,7 @@ function library:Init(key)
     local container = Instance.new("Frame")
     local containerCorner = Instance.new("UICorner")
     local containerGradient = Instance.new("UIGradient")
-
+    
     screen.Name = "screen"
     screen.Parent = CoreGuiService
     screen.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
@@ -884,233 +884,191 @@ function library:Init(key)
     edge.Name = "edge"
     edge.Parent = screen
     edge.AnchorPoint = Vector2.new(0.5, 0.5)
-    edge.BackgroundColor3 = Color3.fromRGB(15, 15, 15) -- fundo bem escuro
+    edge.BackgroundColor3 = Color3.fromRGB(15, 15, 15)
     edge.BorderSizePixel = 0
     edge.Position = UDim2.new(0.5, 0, 0.5, 0)
     edge.Size = UDim2.new(0, 594, 0, 406)
     
-    -- 🩸 Efeito de brilho vermelho pulsante (opcional)
-    local edgeGlow = Instance.new("UIStroke")
-    edgeGlow.Color = Color3.fromRGB(255, 30, 30)
-    edgeGlow.Thickness = 1.5
-    edgeGlow.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
-    edgeGlow.Transparency = 0.15
-    edgeGlow.Parent = edge
+    local edgeStroke = Instance.new("UIStroke")
+    edgeStroke.Color = Color3.fromRGB(255, 0, 0)
+    edgeStroke.Thickness = 1.4
+    edgeStroke.Transparency = 0.15
+    edgeStroke.Parent = edge
     
-    -- 💢 Leve sombra vermelha ao redor
-    local edgeShadow = Instance.new("ImageLabel")
-    edgeShadow.Name = "edgeShadow"
-    edgeShadow.Parent = edge
-    edgeShadow.AnchorPoint = Vector2.new(0.5, 0.5)
-    edgeShadow.Position = UDim2.new(0.5, 0, 0.5, 0)
-    edgeShadow.Size = UDim2.new(1.1, 0, 1.1, 0)
-    edgeShadow.ZIndex = -1
-    edgeShadow.Image = "rbxassetid://5028857472"
-    edgeShadow.ImageColor3 = Color3.fromRGB(255, 0, 0)
-    edgeShadow.ImageTransparency = 0.8
-    edgeShadow.ScaleType = Enum.ScaleType.Slice
-    edgeShadow.SliceCenter = Rect.new(24, 24, 276, 276)
-    edgeShadow.BackgroundTransparency = 1
-    
-    -- 🔻 Permite arrastar
     drag(edge, 0.04)
     
     local CanChangeVisibility = true
     UserInputService.InputBegan:Connect(function(input)
-        if CanChangeVisibility and input.KeyCode == key then
-            edge.Visible = not edge.Visible
-        end
+    	if CanChangeVisibility and input.KeyCode == key then
+    		edge.Visible = not edge.Visible
+    	end
     end)
     
-    -- 🟥 Cantos arredondados da borda
     edgeCorner.CornerRadius = UDim.new(0, 4)
-    edgeCorner.Name = "edgeCorner"
     edgeCorner.Parent = edge
     
     -- ⚫ Fundo interno principal
     background.Name = "background"
     background.Parent = edge
     background.AnchorPoint = Vector2.new(0.5, 0.5)
-    background.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
+    background.BackgroundColor3 = Color3.fromRGB(20, 20, 20)
     background.BorderSizePixel = 0
     background.Position = UDim2.new(0.5, 0, 0.5, 0)
     background.Size = UDim2.new(0, 592, 0, 404)
     background.ClipsDescendants = true
     
-    -- 🩶 Cantos do background
     backgroundCorner.CornerRadius = UDim.new(0, 4)
-    backgroundCorner.Name = "backgroundCorner"
     backgroundCorner.Parent = background
     
-    -- 🔥 Gradiente vermelho-escuro elegante
     backgroundGradient.Color = ColorSequence.new({
-        ColorSequenceKeypoint.new(0.00, Color3.fromRGB(30, 30, 30)),
-        ColorSequenceKeypoint.new(0.45, Color3.fromRGB(60, 0, 0)),
-        ColorSequenceKeypoint.new(1.00, Color3.fromRGB(15, 15, 15))
+    	ColorSequenceKeypoint.new(0.00, Color3.fromRGB(30, 0, 0)),
+    	ColorSequenceKeypoint.new(0.45, Color3.fromRGB(25, 25, 25)),
+    	ColorSequenceKeypoint.new(1.00, Color3.fromRGB(40, 0, 0))
     })
     backgroundGradient.Rotation = 90
-    backgroundGradient.Name = "backgroundGradient"
     backgroundGradient.Parent = background
-  
-
+    
+    -- 🔴 Header (título superior)
     headerLabel.Name = "headerLabel"
     headerLabel.Parent = background
-    headerLabel.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-    headerLabel.BackgroundTransparency = 1.000
+    headerLabel.BackgroundTransparency = 1
     headerLabel.Size = UDim2.new(0, 592, 0, 38)
     headerLabel.Font = Enum.Font.Code
     headerLabel.Text = title
-    headerLabel.TextColor3 = Color3.fromRGB(198, 198, 198)
-    headerLabel.TextSize = 16.000
+    headerLabel.TextColor3 = Color3.fromRGB(255, 60, 60)
+    headerLabel.TextSize = 16
     headerLabel.TextXAlignment = Enum.TextXAlignment.Left
     headerLabel.RichText = true
-
-    headerPadding.Name = "headerPadding"
+    
     headerPadding.Parent = headerLabel
     headerPadding.PaddingBottom = UDim.new(0, 6)
     headerPadding.PaddingLeft = UDim.new(0, 12)
-    headerPadding.PaddingRight = UDim.new(0, 6)
     headerPadding.PaddingTop = UDim.new(0, 6)
-
-    barFolder.Name = "barFolder"
+    
+    -- 🔻 Linha divisória vermelha
     barFolder.Parent = background
-
     bar.Name = "bar"
     bar.Parent = barFolder
-    bar.BackgroundColor3 = Color3.fromRGB(159, 115, 255)
-    bar.BackgroundTransparency = 0.200
+    bar.BackgroundColor3 = Color3.fromRGB(255, 0, 0)
+    bar.BackgroundTransparency = 0.3
     bar.Size = UDim2.new(0, 592, 0, 1)
     bar.BorderSizePixel = 0
-
+    
     barCorner.CornerRadius = UDim.new(0, 2)
-    barCorner.Name = "barCorner"
     barCorner.Parent = bar
-
-    barLayout.Name = "barLayout"
+    
     barLayout.Parent = barFolder
     barLayout.HorizontalAlignment = Enum.HorizontalAlignment.Center
-    barLayout.SortOrder = Enum.SortOrder.LayoutOrder
-
+    
+    -- 🧱 Container lateral das tabs
     tabButtonsEdge.Name = "tabButtonsEdge"
     tabButtonsEdge.Parent = background
     tabButtonsEdge.AnchorPoint = Vector2.new(0.5, 0.5)
-    tabButtonsEdge.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
-    tabButtonsEdge.Position = UDim2.new(0.1435, 0, 0.536000013, 0)
+    tabButtonsEdge.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
+    tabButtonsEdge.Position = UDim2.new(0.1435, 0, 0.536, 0)
     tabButtonsEdge.Size = UDim2.new(0, 152, 0, 360)
-
+    
     tabButtonCorner.CornerRadius = UDim.new(0, 2)
-    tabButtonCorner.Name = "tabButtonCorner"
     tabButtonCorner.Parent = tabButtonsEdge
-
+    
     tabButtons.Name = "tabButtons"
     tabButtons.Parent = tabButtonsEdge
     tabButtons.AnchorPoint = Vector2.new(0.5, 0.5)
-    tabButtons.BackgroundColor3 = Color3.fromRGB(235, 235, 235)
-    tabButtons.ClipsDescendants = true
+    tabButtons.BackgroundColor3 = Color3.fromRGB(35, 0, 0)
     tabButtons.Position = UDim2.new(0.5, 0, 0.5, 0)
     tabButtons.Size = UDim2.new(0, 150, 0, 358)
-
+    
     tabButtonCorner_2.CornerRadius = UDim.new(0, 2)
-    tabButtonCorner_2.Name = "tabButtonCorner"
     tabButtonCorner_2.Parent = tabButtons
-
-    tabButtonsGradient.Color = ColorSequence.new{ColorSequenceKeypoint.new(0.00, Color3.fromRGB(34, 34, 34)), ColorSequenceKeypoint.new(1.00, Color3.fromRGB(28, 28, 28))}
+    
+    tabButtonsGradient.Color = ColorSequence.new({
+    	ColorSequenceKeypoint.new(0.00, Color3.fromRGB(50, 0, 0)),
+    	ColorSequenceKeypoint.new(1.00, Color3.fromRGB(25, 0, 0))
+    })
     tabButtonsGradient.Rotation = 90
-    tabButtonsGradient.Name = "tabButtonsGradient"
     tabButtonsGradient.Parent = tabButtons
-
-    tabButtonLayout.Name = "tabButtonLayout"
+    
     tabButtonLayout.Parent = tabButtons
     tabButtonLayout.HorizontalAlignment = Enum.HorizontalAlignment.Center
-    tabButtonLayout.SortOrder = Enum.SortOrder.LayoutOrder
-
-    tabButtonPadding.Name = "tabButtonPadding"
+    
     tabButtonPadding.Parent = tabButtons
-    tabButtonPadding.PaddingBottom = UDim.new(0, 4)
-    tabButtonPadding.PaddingLeft = UDim.new(0, 4)
-    tabButtonPadding.PaddingRight = UDim.new(0, 4)
     tabButtonPadding.PaddingTop = UDim.new(0, 4)
-
+    
+    -- ⚙️ Container principal das páginas
     containerEdge.Name = "containerEdge"
     containerEdge.Parent = background
     containerEdge.AnchorPoint = Vector2.new(0.5, 0.5)
-    containerEdge.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
-    containerEdge.Position = UDim2.new(0.637000024, 0, 0.536000013, 0)
+    containerEdge.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
+    containerEdge.Position = UDim2.new(0.637, 0, 0.536, 0)
     containerEdge.Size = UDim2.new(0, 414, 0, 360)
-
+    
     tabButtonCorner_3.CornerRadius = UDim.new(0, 2)
-    tabButtonCorner_3.Name = "tabButtonCorner"
     tabButtonCorner_3.Parent = containerEdge
-
+    
     container.Name = "container"
     container.Parent = containerEdge
     container.AnchorPoint = Vector2.new(0.5, 0.5)
-    container.BackgroundColor3 = Color3.fromRGB(235, 235, 235)
+    container.BackgroundColor3 = Color3.fromRGB(25, 0, 0)
     container.Position = UDim2.new(0.5, 0, 0.5, 0)
     container.Size = UDim2.new(0, 412, 0, 358)
-
+    
     containerCorner.CornerRadius = UDim.new(0, 2)
-    containerCorner.Name = "containerCorner"
     containerCorner.Parent = container
-
-    containerGradient.Color = ColorSequence.new{ColorSequenceKeypoint.new(0.00, Color3.fromRGB(34, 34, 34)), ColorSequenceKeypoint.new(1.00, Color3.fromRGB(28, 28, 28))}
+    
+    containerGradient.Color = ColorSequence.new({
+    	ColorSequenceKeypoint.new(0.00, Color3.fromRGB(30, 0, 0)),
+    	ColorSequenceKeypoint.new(1.00, Color3.fromRGB(15, 15, 15))
+    })
     containerGradient.Rotation = 90
-    containerGradient.Name = "containerGradient"
     containerGradient.Parent = container
-
+    
+    -- 🧩 Sistema de Tabs
     local TabLibrary = {
-        IsFirst = true,
-        CurrentTab = ""
+    	IsFirst = true,
+    	CurrentTab = ""
     }
+    
     CreateTween("tab_text_colour", 0.16)
+    
     function TabLibrary:NewTab(title)
-        title = title or "tab"
-
-        local tabButton = Instance.new("TextButton")
-        local page = Instance.new("ScrollingFrame")
-        local pageLayout = Instance.new("UIListLayout")
-        local pagePadding = Instance.new("UIPadding")
-
-        tabButton.Name = "tabButton"
-        tabButton.Parent = tabButtons
-        tabButton.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-        tabButton.BackgroundTransparency = 1.000
-        tabButton.ClipsDescendants = true
-        tabButton.Position = UDim2.new(-0.0281690136, 0, 0, 0)
-        tabButton.Size = UDim2.new(0, 150, 0, 22)
-        tabButton.AutoButtonColor = false
-        tabButton.Font = Enum.Font.Code
-        tabButton.Text = title
-        tabButton.TextColor3 = Color3.fromRGB(170, 170, 170)
-        tabButton.TextSize = 15.000
-        tabButton.RichText = true
-
-        page.Name = "page"
-        page.Parent = container
-        page.Active = true
-        page.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-        page.BackgroundTransparency = 1.000
-        page.BorderSizePixel = 0
-        page.Size = UDim2.new(0, 412, 0, 358)
-        page.BottomImage = "http://www.roblox.com/asset/?id=3062506202"
-        page.MidImage = "http://www.roblox.com/asset/?id=3062506202"
-        page.ScrollBarThickness = 1
-        page.TopImage = "http://www.roblox.com/asset/?id=3062506202"
-        page.ScrollBarImageColor3 = Color3.fromRGB(159, 115, 255)
-        page.Visible = false
-        
-        pageLayout.Name = "pageLayout"
-        pageLayout.Parent = page
-        pageLayout.HorizontalAlignment = Enum.HorizontalAlignment.Center
-        pageLayout.SortOrder = Enum.SortOrder.LayoutOrder
-        pageLayout.Padding = UDim.new(0, 4)
-
-        pagePadding.Name = "pagePadding"
-        pagePadding.Parent = page
-        pagePadding.PaddingBottom = UDim.new(0, 6)
-        pagePadding.PaddingLeft = UDim.new(0, 6)
-        pagePadding.PaddingRight = UDim.new(0, 6)
-        pagePadding.PaddingTop = UDim.new(0, 6)
+    	title = title or "tab"
+    
+    	local tabButton = Instance.new("TextButton")
+    	local page = Instance.new("ScrollingFrame")
+    	local pageLayout = Instance.new("UIListLayout")
+    	local pagePadding = Instance.new("UIPadding")
+    
+    	tabButton.Name = "tabButton"
+    	tabButton.Parent = tabButtons
+    	tabButton.BackgroundTransparency = 1
+    	tabButton.Size = UDim2.new(0, 150, 0, 22)
+    	tabButton.AutoButtonColor = false
+    	tabButton.Font = Enum.Font.Code
+    	tabButton.Text = title
+    	tabButton.TextColor3 = Color3.fromRGB(220, 220, 220)
+    	tabButton.TextSize = 15
+    	tabButton.RichText = true
+    
+    	page.Name = "page"
+    	page.Parent = container
+    	page.Active = true
+    	page.BackgroundTransparency = 1
+    	page.BorderSizePixel = 0
+    	page.Size = UDim2.new(0, 412, 0, 358)
+    	page.ScrollBarThickness = 1
+    	page.ScrollBarImageColor3 = Color3.fromRGB(255, 0, 0)
+    	page.Visible = false
+    
+    	pageLayout.Parent = page
+    	pageLayout.HorizontalAlignment = Enum.HorizontalAlignment.Center
+    	pageLayout.SortOrder = Enum.SortOrder.LayoutOrder
+    	pageLayout.Padding = UDim.new(0, 4)
+    
+    	pagePadding.Parent = page
+    	pagePadding.PaddingBottom = UDim.new(0, 6)
+    	pagePadding.PaddingLeft = UDim.new(0, 6)
+    	pagePadding.PaddingRight = UDim.new(0, 6)
+    	pagePadding.PaddingTop = UDim.new(0, 6)
 
         if TabLibrary.IsFirst then
             page.Visible = true
@@ -3572,4 +3530,5 @@ function library:Init(key)
     return TabLibrary
 end
 return library
+
 
