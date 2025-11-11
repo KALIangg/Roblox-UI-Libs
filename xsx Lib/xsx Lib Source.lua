@@ -965,8 +965,8 @@ function library:Init(key)
     tabButtonsEdge.Parent = background
     tabButtonsEdge.AnchorPoint = Vector2.new(0.5, 0.5)
     tabButtonsEdge.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
-    tabButtonsEdge.Position = UDim2.new(0.1435, 0, 0.536, 0)
-    tabButtonsEdge.Size = UDim2.new(0, 152, 0, 360)
+    tabButtonsEdge.Position = UDim2.new(0.18, 0, 0.53, 0) -- posição ajustada
+    tabButtonsEdge.Size = UDim2.new(0, 250, 0, 520) -- largura e altura ampliadas
     
     tabButtonCorner.CornerRadius = UDim.new(0, 2)
     tabButtonCorner.Parent = tabButtonsEdge
@@ -999,8 +999,9 @@ function library:Init(key)
     containerEdge.Parent = background
     containerEdge.AnchorPoint = Vector2.new(0.5, 0.5)
     containerEdge.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
-    containerEdge.Position = UDim2.new(0.637, 0, 0.536, 0)
-    containerEdge.Size = UDim2.new(0, 414, 0, 360)
+    containerEdge.Position = UDim2.new(0.67, 0, 0.53, 0) -- ajustado para acompanhar o novo tamanho
+    containerEdge.Size = UDim2.new(0, 680, 0, 520) -- aumente para preencher melhor
+
     
     tabButtonCorner_3.CornerRadius = UDim.new(0, 2)
     tabButtonCorner_3.Parent = containerEdge
@@ -3530,6 +3531,7 @@ function library:Init(key)
     return TabLibrary
 end
 return library
+
 
 
 
