@@ -770,7 +770,7 @@ function library:Introduction()
     hashLogo.Position = UDim2.new(0.5, 0, 0.5, 0)
     hashLogo.Size = UDim2.new(0, 150, 0, 150)
     hashLogo.Visible = true
-    hashLogo.Image = "http://www.roblox.com/asset/?id=112280163844400"
+    hashLogo.Image = "http://www.roblox.com/asset/?id=76977741215928"
     hashLogo.ImageColor3 = Color3.fromRGB(159, 115, 255)
     hashLogo.ImageTransparency = 1
     
@@ -3594,5 +3594,6 @@ function library:Init(key)
     return TabLibrary
 end
 return library
+
 
 
