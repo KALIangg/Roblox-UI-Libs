@@ -758,7 +758,7 @@ function library:Introduction()
     xsxLogo.Position = UDim2.new(0.5, 0, 0.5, 0)
     xsxLogo.Size = UDim2.new(0, 448, 0, 150)
     xsxLogo.Visible = true
-    xsxLogo.Image = "http://www.roblox.com/asset/?id=281338498"
+    xsxLogo.Image = "http://www.roblox.com/asset/?id=2459243309"
     xsxLogo.ImageColor3 = Color3.fromRGB(255, 0, 0)
     xsxLogo.ImageTransparency = 1
     
@@ -768,10 +768,9 @@ function library:Introduction()
     hashLogo.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
     hashLogo.BackgroundTransparency = 1.000
     hashLogo.Position = UDim2.new(0.5, 0, 0.5, 0)
-    hashLogo.Size = UDim2.new(0, 150, 0, 150)
+    hashLogo.Size = UDim2.new(0, 200, 0, 200)
     hashLogo.Visible = true
     hashLogo.Image = "http://www.roblox.com/asset/?id=76977741215928"
-    hashLogo.ImageColor3 = Color3.fromRGB(159, 115, 255)
     hashLogo.ImageTransparency = 1
     
     xsx.Name = "xsx"
@@ -3594,6 +3593,7 @@ function library:Init(key)
     return TabLibrary
 end
 return library
+
 
 
 
