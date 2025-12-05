@@ -1049,15 +1049,7 @@ function library:Init(key)
         tabFrame.Parent = tabButtons
         tabFrame.ClipsDescendants = true
         tabFrame.LayoutOrder = #tabButtons:GetChildren()
-
-        -- Gap entre abas (opcional, visual)
-        local tabGap = Instance.new("Frame")
-        tabGap.Name = "tabGap"
-        tabGap.Size = UDim2.new(0.8, 0, 0, 6) -- altura do gap
-        tabGap.BackgroundTransparency = 1 -- transparente, só ocupa espaço
-        tabGap.Parent = tabButtons
-
-    
+ 
         local tabFrameCorner = Instance.new("UICorner")
         tabFrameCorner.CornerRadius = UDim.new(0, 4)
         tabFrameCorner.Parent = tabFrame
@@ -1074,10 +1066,18 @@ function library:Init(key)
         tabButton.RichText = true
         tabButton.AutoButtonColor = false
         tabButton.Parent = tabFrame
+
+
+          -- Gap entre abas (opcional, visual)
+        local tabGap = Instance.new("Frame")
+        tabGap.Name = "tabGap"
+        tabGap.Size = UDim2.new(0.8, 0, 0, 6) -- altura do gap
+        tabGap.BackgroundTransparency = 1 -- transparente, só ocupa espaço
+        tabGap.Parent = tabButtons
     
         -- Hover effect (frame + texto)
         local hoverTweenInfo = TweenInfo.new(0.2, Enum.EasingStyle.Quad, Enum.EasingDirection.Out)
-        local hoverColor = Color3.fromRGB(255, 255, 255)
+        local hoverColor = Color3.fromRGB(255, 55, 55)
         local normalColor = Color3.fromRGB(45, 0, 0)
         local normalTextColor = Color3.fromRGB(170, 170, 170)
         local activeTextColor = Color3.fromRGB(255, 60, 60)
@@ -3627,6 +3627,7 @@ function library:Init(key)
     return TabLibrary
 end
 return library
+
 
 
 
