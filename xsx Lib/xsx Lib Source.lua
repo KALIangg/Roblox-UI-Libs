@@ -1077,22 +1077,27 @@ function library:Init(key)
     
         -- Hover effect (frame + texto)
         local hoverTweenInfo = TweenInfo.new(0.2, Enum.EasingStyle.Quad, Enum.EasingDirection.Out)
-        local hoverColor = Color3.fromRGB(255, 55, 55)
-        local normalColor = Color3.fromRGB(45, 0, 0)
-        local normalTextColor = Color3.fromRGB(255, 255, 255)
-        local activeTextColor = Color3.fromRGB(255, 255, 255)
-    
+        
+        local normalColor = Color3.fromRGB(45, 0, 0)       -- fundo normal
+        local hoverColor = Color3.fromRGB(200, 0, 0)       -- fundo ao passar o mouse, mais escuro que o vermelho de destaque
+        local normalTextColor = Color3.fromRGB(255, 255, 255)  -- texto normal
+        local hoverTextColor = Color3.fromRGB(255, 255, 255)   -- texto no hover (sempre branco pra contrastar)
+        local activeTextColor = Color3.fromRGB(255, 255, 255)  -- texto da aba ativa
+        
         tabButton.MouseEnter:Connect(function()
+            -- Fundo escuro + texto branco
             TweenService:Create(tabFrame, hoverTweenInfo, {BackgroundColor3 = hoverColor}):Play()
-            TweenService:Create(tabButton, hoverTweenInfo, {TextColor3 = hoverColor}):Play()
+            TweenService:Create(tabButton, hoverTweenInfo, {TextColor3 = hoverTextColor}):Play()
         end)
-    
+        
         tabButton.MouseLeave:Connect(function()
+            -- Mantém cor de fundo/ativo dependendo da aba
             local bgColor = TabLibrary.CurrentTab == title and hoverColor or normalColor
             local txtColor = TabLibrary.CurrentTab == title and activeTextColor or normalTextColor
             TweenService:Create(tabFrame, hoverTweenInfo, {BackgroundColor3 = bgColor}):Play()
             TweenService:Create(tabButton, hoverTweenInfo, {TextColor3 = txtColor}):Play()
         end)
+
     
         -- Página correspondente
         local page = Instance.new("ScrollingFrame")
@@ -3627,6 +3632,7 @@ function library:Init(key)
     return TabLibrary
 end
 return library
+
 
 
 
