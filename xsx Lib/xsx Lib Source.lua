@@ -1041,51 +1041,71 @@ function library:Init(key)
     function TabLibrary:NewTab(title)
         title = title or "tab"
     
-        local tabButton = Instance.new("TextButton")
-        local page = Instance.new("ScrollingFrame")
-        local pageLayout = Instance.new("UIListLayout")
-        local pagePadding = Instance.new("UIPadding")
+        -- Container de botão com fundo arredondado
+        local tabFrame = Instance.new("Frame")
+        local tabFrameCorner = Instance.new("UICorner")
+        tabFrame.Name = "tabFrame"
+        tabFrame.Size = UDim2.new(1, -8, 0, 32) -- espaço interno e altura
+        tabFrame.BackgroundColor3 = Color3.fromRGB(45, 0, 0)
+        tabFrame.Parent = tabButtons
+        tabFrame.ClipsDescendants = true
+        tabFrame.LayoutOrder = #tabButtons:GetChildren() -- organiza automaticamente
+        tabFrame.Padding = UDim.new(0, 2) -- cria espaçamento interno opcional
     
-        -- 🔘 Botão da aba
+        tabFrameCorner.CornerRadius = UDim.new(0, 4)
+        tabFrameCorner.Parent = tabFrame
+    
+        -- Botão da aba dentro do frame
+        local tabButton = Instance.new("TextButton")
         tabButton.Name = "tabButton"
-        tabButton.Parent = tabButtons
         tabButton.BackgroundTransparency = 1
-        tabButton.Size = UDim2.new(1, -8, 0, 26)
-        tabButton.AutoButtonColor = false
+        tabButton.Size = UDim2.new(1, 0, 1, 0)
         tabButton.Font = Enum.Font.Code
         tabButton.Text = title
         tabButton.TextColor3 = Color3.fromRGB(170, 170, 170)
         tabButton.TextSize = 15
         tabButton.RichText = true
+        tabButton.AutoButtonColor = false
+        tabButton.Parent = tabFrame
     
-        -- 📜 Conteúdo da aba
-        page.Name = "page"
+        -- Hover effect
+        local uicorner = tabFrameCorner
+        local mouseEnter = Instance.new("UIStroke")
+        mouseEnter.Color = Color3.fromRGB(255, 0, 0)
+        mouseEnter.Thickness = 2
+        mouseEnter.Transparency = 1
+        mouseEnter.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
+        mouseEnter.Parent = tabFrame
+    
+        tabButton.MouseEnter:Connect(function()
+            mouseEnter:Tween{Property="Transparency", Value=0, Duration=0.2}
+            tabButton.TextColor3 = Color3.fromRGB(255, 100, 100)
+        end)
+        tabButton.MouseLeave:Connect(function()
+            mouseEnter:Tween{Property="Transparency", Value=1, Duration=0.2}
+            tabButton.TextColor3 = Color3.fromRGB(170, 170, 170)
+        end)
+    
+        -- Página correspondente
+        local page = Instance.new("ScrollingFrame")
+        page.Name = title.."Page"
         page.Parent = container
-        page.Active = true
         page.BackgroundTransparency = 1
-        page.BorderSizePixel = 0
         page.Size = UDim2.new(1, 0, 1, 0)
-        page.BottomImage = "http://www.roblox.com/asset/?id=3062506202"
-        page.MidImage = "http://www.roblox.com/asset/?id=3062506202"
-        page.ScrollBarThickness = 4
-        page.TopImage = "http://www.roblox.com/asset/?id=3062506202"
-        page.ScrollBarImageColor3 = Color3.fromRGB(255, 60, 60)
-        page.Visible = false
+        page.CanvasSize = UDim2.new(0, 0, 0, 0)
+        page.ScrollBarThickness = 6
     
-        -- Layout interno
-        pageLayout.Name = "pageLayout"
+        local pageLayout = Instance.new("UIListLayout")
         pageLayout.Parent = page
-        pageLayout.HorizontalAlignment = Enum.HorizontalAlignment.Left
         pageLayout.SortOrder = Enum.SortOrder.LayoutOrder
-        pageLayout.Padding = UDim.new(0, 4)
+        pageLayout.Padding = UDim.new(0, 6)
     
-        -- Padding do conteúdo
-        pagePadding.Name = "pagePadding"
-        pagePadding.Parent = page
-        pagePadding.PaddingBottom = UDim.new(0, 6)
-        pagePadding.PaddingLeft = UDim.new(0, 12)
-        pagePadding.PaddingRight = UDim.new(0, 12)
+        local pagePadding = Instance.new("UIPadding")
         pagePadding.PaddingTop = UDim.new(0, 6)
+        pagePadding.PaddingBottom = UDim.new(0, 6)
+        pagePadding.PaddingLeft = UDim.new(0, 6)
+        pagePadding.PaddingRight = UDim.new(0, 6)
+        pagePadding.Parent = page
     
         -- 📜 Auto Scroll dinâmico
         local function UpdatePageSize()
@@ -3593,6 +3613,7 @@ function library:Init(key)
     return TabLibrary
 end
 return library
+
 
 
 
