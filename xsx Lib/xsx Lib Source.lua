@@ -1043,15 +1043,14 @@ function library:Init(key)
     
         -- Container de botão com fundo arredondado
         local tabFrame = Instance.new("Frame")
-        local tabFrameCorner = Instance.new("UICorner")
         tabFrame.Name = "tabFrame"
-        tabFrame.Size = UDim2.new(1, -8, 0, 32) -- espaço interno e altura
+        tabFrame.Size = UDim2.new(1, -8, 0, 32)
         tabFrame.BackgroundColor3 = Color3.fromRGB(45, 0, 0)
         tabFrame.Parent = tabButtons
         tabFrame.ClipsDescendants = true
-        tabFrame.LayoutOrder = #tabButtons:GetChildren() -- organiza automaticamente
-        tabFrame.Padding = UDim.new(0, 2) -- cria espaçamento interno opcional
+        tabFrame.LayoutOrder = #tabButtons:GetChildren()
     
+        local tabFrameCorner = Instance.new("UICorner")
         tabFrameCorner.CornerRadius = UDim.new(0, 4)
         tabFrameCorner.Parent = tabFrame
     
@@ -1068,22 +1067,23 @@ function library:Init(key)
         tabButton.AutoButtonColor = false
         tabButton.Parent = tabFrame
     
-        -- Hover effect
-        local uicorner = tabFrameCorner
-        local mouseEnter = Instance.new("UIStroke")
-        mouseEnter.Color = Color3.fromRGB(255, 0, 0)
-        mouseEnter.Thickness = 2
-        mouseEnter.Transparency = 1
-        mouseEnter.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
-        mouseEnter.Parent = tabFrame
+        -- Hover effect (frame + texto)
+        local hoverTweenInfo = TweenInfo.new(0.2, Enum.EasingStyle.Quad, Enum.EasingDirection.Out)
+        local hoverColor = Color3.fromRGB(255, 100, 100)
+        local normalColor = Color3.fromRGB(45, 0, 0)
+        local normalTextColor = Color3.fromRGB(170, 170, 170)
+        local activeTextColor = Color3.fromRGB(255, 60, 60)
     
         tabButton.MouseEnter:Connect(function()
-            mouseEnter:Tween{Property="Transparency", Value=0, Duration=0.2}
-            tabButton.TextColor3 = Color3.fromRGB(255, 100, 100)
+            TweenService:Create(tabFrame, hoverTweenInfo, {BackgroundColor3 = hoverColor}):Play()
+            TweenService:Create(tabButton, hoverTweenInfo, {TextColor3 = hoverColor}):Play()
         end)
+    
         tabButton.MouseLeave:Connect(function()
-            mouseEnter:Tween{Property="Transparency", Value=1, Duration=0.2}
-            tabButton.TextColor3 = Color3.fromRGB(170, 170, 170)
+            local bgColor = TabLibrary.CurrentTab == title and hoverColor or normalColor
+            local txtColor = TabLibrary.CurrentTab == title and activeTextColor or normalTextColor
+            TweenService:Create(tabFrame, hoverTweenInfo, {BackgroundColor3 = bgColor}):Play()
+            TweenService:Create(tabButton, hoverTweenInfo, {TextColor3 = txtColor}):Play()
         end)
     
         -- Página correspondente
@@ -1107,7 +1107,7 @@ function library:Init(key)
         pagePadding.PaddingRight = UDim.new(0, 6)
         pagePadding.Parent = page
     
-        -- 📜 Auto Scroll dinâmico
+        -- Auto Scroll dinâmico
         local function UpdatePageSize()
             local contentSize = pageLayout.AbsoluteContentSize
             page.CanvasSize = UDim2.new(0, contentSize.X + 15, 0, contentSize.Y + 15)
@@ -1121,11 +1121,13 @@ function library:Init(key)
         -- Primeira aba aberta automaticamente
         if TabLibrary.IsFirst then
             page.Visible = true
-            tabButton.TextColor3 = Color3.fromRGB(255, 60, 60)
             TabLibrary.CurrentTab = title
+            tabButton.TextColor3 = activeTextColor
+        else
+            page.Visible = false
         end
     
-        -- 🔁 Mudança de aba
+        -- Mudança de aba
         tabButton.MouseButton1Click:Connect(function()
             TabLibrary.CurrentTab = title
             for _,v in pairs(container:GetChildren()) do
@@ -1135,12 +1137,16 @@ function library:Init(key)
             end
             page.Visible = true
     
+            -- Atualiza cores de todos os botões
             for _,v in pairs(tabButtons:GetChildren()) do
-                if v:IsA("TextButton") then
-                    TweenService:Create(v, TweenTable["tab_text_colour"], {TextColor3 = Color3.fromRGB(170, 170, 170)}):Play()
+                if v:FindFirstChild("tabButton") then
+                    local txt = v.tabButton
+                    local bg = v
+                    local isActive = txt.Text == title
+                    TweenService:Create(txt, hoverTweenInfo, {TextColor3 = isActive and activeTextColor or normalTextColor}):Play()
+                    TweenService:Create(bg, hoverTweenInfo, {BackgroundColor3 = isActive and hoverColor or normalColor}):Play()
                 end
             end
-            TweenService:Create(tabButton, TweenTable["tab_text_colour"], {TextColor3 = Color3.fromRGB(255, 60, 60)}):Play()
         end)
     
         TabLibrary.IsFirst = false
@@ -3613,6 +3619,7 @@ function library:Init(key)
     return TabLibrary
 end
 return library
+
 
 
 
