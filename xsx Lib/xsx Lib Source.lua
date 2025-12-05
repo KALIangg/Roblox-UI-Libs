@@ -1079,8 +1079,8 @@ function library:Init(key)
         local hoverTweenInfo = TweenInfo.new(0.2, Enum.EasingStyle.Quad, Enum.EasingDirection.Out)
         local hoverColor = Color3.fromRGB(255, 55, 55)
         local normalColor = Color3.fromRGB(45, 0, 0)
-        local normalTextColor = Color3.fromRGB(170, 170, 170)
-        local activeTextColor = Color3.fromRGB(255, 60, 60)
+        local normalTextColor = Color3.fromRGB(255, 255, 255)
+        local activeTextColor = Color3.fromRGB(255, 255, 255)
     
         tabButton.MouseEnter:Connect(function()
             TweenService:Create(tabFrame, hoverTweenInfo, {BackgroundColor3 = hoverColor}):Play()
@@ -3627,6 +3627,7 @@ function library:Init(key)
     return TabLibrary
 end
 return library
+
 
 
 
