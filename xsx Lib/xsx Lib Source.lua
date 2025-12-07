@@ -196,7 +196,7 @@ function library:UnlockFps(new) -- syn only
 end
 
 function library:Watermark(text)
-    for i,v in pairs(CoreGuiService:GetChildren()) do
+    for i,v in pairs(Player.PlayerGui:GetChildren()) do
         if v.Name == "watermark" then
             v:Destroy()
         end
@@ -221,7 +221,7 @@ function library:Watermark(text)
     local backgroundLayout = Instance.new("UIListLayout")
 
     watermark.Name = "watermark"
-    watermark.Parent = CoreGuiService
+    watermark.Parent = Player.PlayerGui
     watermark.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
     
     watermarkLayout.Name = "watermarkLayout"
@@ -285,13 +285,13 @@ function library:Watermark(text)
 
     waterText.Name = "notifText"
     waterText.Parent = background
-    waterText.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+    waterText.BackgroundColor3 = Color3.fromRGB(255, 0 , 0)
     waterText.BackgroundTransparency = 1.000
     waterText.Position = UDim2.new(0, 0, -0.0416666679, 0)
     waterText.Size = UDim2.new(0, 0, 0, 24)
     waterText.Font = Enum.Font.Code
     waterText.Text = text
-    waterText.TextColor3 = Color3.fromRGB(198, 198, 198)
+    waterText.TextColor3 = Color3.fromRGB(255, 0, 0)
     waterText.TextTransparency = 1
     waterText.TextSize = 14.000
     waterText.RichText = true
@@ -494,7 +494,7 @@ function library:Watermark(text)
 end
 
 function library:InitNotifications(text, duration, callback)
-    for i,v in next, CoreGuiService:GetChildren() do
+    for i,v in next, Player.PlayerGui:GetChildren() do
         if v.name == "Notifications" then
             v:Destroy()
         end
@@ -505,7 +505,7 @@ function library:InitNotifications(text, duration, callback)
     local notificationsPadding = Instance.new("UIPadding")
 
     Notifications.Name = "Notifications"
-    Notifications.Parent = CoreGuiService
+    Notifications.Parent = Player.PlayerGui
     Notifications.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 
     notificationsLayout.Name = "notificationsLayout"
@@ -675,7 +675,7 @@ function library:InitNotifications(text, duration, callback)
 end
 
 function library:Introduction()
-    for _,v in next, CoreGuiService:GetChildren() do
+    for _,v in next, Player.PlayerGui:GetChildren() do
         if v.Name == "screen" then
             v:Destroy()
         end
@@ -699,7 +699,7 @@ function library:Introduction()
     local pageLayout = Instance.new("UIListLayout")
     
     introduction.Name = "introduction"
-    introduction.Parent = CoreGuiService
+    introduction.Parent = Player.PlayerGui
     introduction.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
     
     edge.Name = "edge"
@@ -877,7 +877,7 @@ function library:Init(key)
 
     -- 🟥 GUI principal (versão fiel ao original, mas adaptada pra 1000x600)
     screen.Name = "screen"
-    screen.Parent = CoreGuiService
+    screen.Parent = Player.PlayerGui
     screen.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
     
     -- 🔳 Moldura principal
@@ -3632,6 +3632,7 @@ function library:Init(key)
     return TabLibrary
 end
 return library
+
 
 
 
