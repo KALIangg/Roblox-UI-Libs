@@ -853,7 +853,27 @@ function library:Init(key)
     local title = library.title
     key = key or Enum.KeyCode.RightAlt
 
+    local TextChatService = game:GetService("TextChatService")
     local screen = Instance.new("ScreenGui")
+  
+    -- Função para alternar o estado do painel
+    local function togglePanel()
+    	screen.Enabled = not screen.Enabled
+    end
+    
+    -- Listener do chat
+    TextChatService.MessageReceived:Connect(function(message)
+    	-- garante que só o próprio player possa ativar
+    	if message.TextSource then
+    		local speaker = game.Players:GetPlayerByUserId(message.TextSource.UserId)
+    		if speaker ~= Player then return end
+    	end
+    
+    	if string.lower(message.Text) == "/panel" then
+    		togglePanel()
+    	end
+    end)
+
     local edge = Instance.new("Frame")
     local edgeCorner = Instance.new("UICorner")
     local background = Instance.new("Frame")
@@ -3636,6 +3656,7 @@ function library:Init(key)
     return TabLibrary
 end
 return library
+
 
 
 
