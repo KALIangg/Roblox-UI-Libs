@@ -1047,8 +1047,8 @@ function library:Init(key)
     containerGradient.Parent = container
 
       -- ⌨️ Tecla ALT para abrir/fechar CORRETAMENTE
-    game:GetService("UserInputService").InputBegan:Connect(function(input, gameProcessed)
-        if not gameProcessed and input.KeyCode == key then
+    game:GetService("UserInputService").InputBegan:Connect(function(input)
+        if input.KeyCode == key then
             screen.Enabled = not screen.Enabled
         end
     end)
@@ -3633,6 +3633,7 @@ function library:Init(key)
     return TabLibrary
 end
 return library
+
 
 
 
