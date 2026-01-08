@@ -932,7 +932,7 @@ function library:Init(key)
     background.Parent = edge
     background.AnchorPoint = Vector2.new(0.5, 0.5)
     background.Position = UDim2.new(0.5, 0, 0.5, 0)
-    background.Size = UDim2.new(1, -5, 1, -5) -- margem interna real
+    background.Size = UDim2.new(1, 0, 1, 0) -- margem interna real
     background.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
     background.BorderSizePixel = 0
     background.ClipsDescendants = true
@@ -984,7 +984,7 @@ function library:Init(key)
     tabButtonsEdge.AnchorPoint = Vector2.new(0, 0)
     tabButtonsEdge.BackgroundColor3 = Color3.fromRGB(35, 0, 0)
     -- Posiciona fora do background à esquerda, mas ainda dentro da edge principal
-    tabButtonsEdge.Position = UDim2.new(0, -260, 0, 0)  -- FORA À ESQUERDA, MAS MESMA ALTURA
+    tabButtonsEdge.Position = UDim2.new(0, -280, 0, 0)  -- FORA À ESQUERDA, MAS MESMA ALTURA
     tabButtonsEdge.Size = UDim2.new(0, 250, 1, 0)  -- ALTURA 100% DA EDGE
     tabButtonsEdge.ZIndex = 3  -- ZIndex maior para ficar por cima
     
@@ -3665,6 +3665,7 @@ function library:Init(key)
     return TabLibrary
 end
 return library
+
 
 
 
