@@ -932,7 +932,7 @@ function library:Init(key)
     background.Parent = edge
     background.AnchorPoint = Vector2.new(0.5, 0.5)
     background.Position = UDim2.new(0.5, 0, 0.5, 0)
-    background.Size = UDim2.new(1, -24, 1, -24) -- margem interna real
+    background.Size = UDim2.new(1, -5, 1, -5) -- margem interna real
     background.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
     background.BorderSizePixel = 0
     background.ClipsDescendants = true
@@ -3665,6 +3665,7 @@ function library:Init(key)
     return TabLibrary
 end
 return library
+
 
 
 
