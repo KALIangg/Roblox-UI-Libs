@@ -983,27 +983,36 @@ function library:Init(key)
     bar.Size = UDim2.new(0, 998, 0, 1)
     bar.Position = UDim2.new(0, 0, 0, 48) -- Posicionado abaixo do header maior
     
-    -- 🎯 PAINEL DE TABS COMPLETAMENTE SEPARADO À ESQUERDA
+    -- 🎯 PAINEL DE TABS COM MESMA ALTURA DA EDGE PRINCIPAL E FIXO
     tabButtonsEdge.Name = "tabButtonsEdge"
-    tabButtonsEdge.Parent = screen  -- AGORA ESTÁ DIRETAMENTE NA SCREEN, NÃO NO BACKGROUND
-    tabButtonsEdge.AnchorPoint = Vector2.new(0, 0.5)
+    tabButtonsEdge.Parent = background  -- VOLTA A SER FILHO DO BACKGROUND
+    tabButtonsEdge.AnchorPoint = Vector2.new(0, 0)
     tabButtonsEdge.BackgroundColor3 = Color3.fromRGB(35, 0, 0)
-    tabButtonsEdge.Position = UDim2.new(0, -260, 0.5, 0)  -- FORA DA EDGE, À ESQUERDA
-    tabButtonsEdge.Size = UDim2.new(0, 250, 0, 500)
-    tabButtonsEdge.ZIndex = 2
+    -- Posiciona fora do background à esquerda, mas ainda dentro da edge principal
+    tabButtonsEdge.Position = UDim2.new(0, -260, 0, 0)  -- FORA À ESQUERDA, MAS MESMA ALTURA
+    tabButtonsEdge.Size = UDim2.new(0, 250, 1, 0)  -- ALTURA 100% DA EDGE
+    tabButtonsEdge.ZIndex = 3  -- ZIndex maior para ficar por cima
     
-    -- Bordas arredondadas mais pronunciadas
-    tabButtonCorner.CornerRadius = UDim.new(0, 12)  -- AUMENTEI PARA 12 PARA MAIS ARREDONDAMENTO
+    -- Bordas arredondadas mais pronunciadas (só no lado direito)
+    local tabButtonCorner = Instance.new("UICorner")
+    tabButtonCorner.CornerRadius = UDim.new(0, 12)
+    -- Para arredondar apenas o lado direito
     tabButtonCorner.Parent = tabButtonsEdge
     
     -- Borda vermelha sutil ao redor das tabs
     local tabEdgeStroke = Instance.new("UIStroke")
-    tabEdgeStroke.Color = Color3.fromRGB(255, 80, 80)  -- VERMELHO MAIS VIVO
+    tabEdgeStroke.Color = Color3.fromRGB(255, 80, 80)
     tabEdgeStroke.Thickness = 1.5
     tabEdgeStroke.Transparency = 0.2
     tabEdgeStroke.Parent = tabButtonsEdge
     
-    -- SOMBRA PARA DESTAQUE
+    -- REMOVER A FUNÇÃO DRAG DA TAB EDGE - COMENTE OU REMOVA ESTA LINHA
+    -- drag(tabButtonsEdge, 0.04)  -- REMOVER ESTA LINHA
+    
+    -- Ajustar o background para não cortar as tabs
+    background.ClipsDescendants = false  -- DESATIVAR CLIPS PRA TABS APARECEREM FORA
+    
+    -- SOMBRA PARA DESTAQUE (opcional, pode manter ou remover)
     local tabShadow = Instance.new("ImageLabel")
     tabShadow.Name = "tabShadow"
     tabShadow.Parent = tabButtonsEdge
@@ -1018,18 +1027,16 @@ function library:Init(key)
     tabShadow.SliceCenter = Rect.new(10, 10, 118, 118)
     tabShadow.ZIndex = -1
     
-    -- FUNÇÃO PARA DRAG NAS TABS TAMBÉM
-    drag(tabButtonsEdge, 0.04)
-    
     tabButtons.Name = "tabButtons"
     tabButtons.Parent = tabButtonsEdge
     tabButtons.AnchorPoint = Vector2.new(0.5, 0.5)
     tabButtons.BackgroundColor3 = Color3.fromRGB(45, 0, 0)
     tabButtons.ClipsDescendants = true
     tabButtons.Position = UDim2.new(0.5, 0, 0.5, 0)
-    tabButtons.Size = UDim2.new(0, 246, 0, 496)
+    tabButtons.Size = UDim2.new(1, -4, 1, -4)  -- 100% menos borda
     
-    tabButtonCorner_2.CornerRadius = UDim.new(0, 10)  -- AUMENTADO PARA 10
+    local tabButtonCorner_2 = Instance.new("UICorner")
+    tabButtonCorner_2.CornerRadius = UDim.new(0, 10)
     tabButtonCorner_2.Parent = tabButtons
     
     tabButtonsGradient.Color = ColorSequence.new{
@@ -1051,13 +1058,14 @@ function library:Init(key)
     tabButtonPadding.PaddingRight = UDim.new(0, 12)
     tabButtonPadding.PaddingTop = UDim.new(0, 12)
     
-    -- 📦 CONTAINER PRINCIPAL (CENTRALIZADO AGORA, JÁ QUE AS TABS ESTÃO À ESQUERDA)
     containerEdge.Name = "containerEdge"
     containerEdge.Parent = background
-    containerEdge.AnchorPoint = Vector2.new(0.5, 0.5)
+    containerEdge.AnchorPoint = Vector2.new(0, 0)
     containerEdge.BackgroundColor3 = Color3.fromRGB(35, 0, 0)
-    containerEdge.Position = UDim2.new(0.5, 20, 0.54, 0)  -- MOVI 20 PIXELS PARA A DIREITA PARA DAR ESPAÇO
-    containerEdge.Size = UDim2.new(0, 700, 0, 500)  -- AUMENTEI A LARGURA
+    -- Posicionar mais à direita para dar espaço às tabs
+    containerEdge.Position = UDim2.new(0, 10, 0, 50)  -- 10px da esquerda, 50px do topo
+    -- Ajustar tamanho para caber com as tabs à esquerda
+    containerEdge.Size = UDim2.new(1, -20, 1, -60)  -- Largura 100% menos margens
     
     -- Bordas arredondadas no container também
     tabButtonCorner_3.CornerRadius = UDim.new(0, 8)
@@ -3662,6 +3670,7 @@ function library:Init(key)
     return TabLibrary
 end
 return library
+
 
 
 
