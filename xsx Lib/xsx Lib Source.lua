@@ -858,7 +858,9 @@ function library:Init(key)
   
     -- Função para alternar o estado do painel
     local function togglePanel()
-    	screen.Enabled = not screen.Enabled
+        screen.Enabled = not screen.Enabled
+        -- As tabs também devem aparecer/desaparecer
+        tabButtonsEdge.Visible = screen.Enabled
     end
     
     -- Listener do chat
@@ -922,11 +924,13 @@ function library:Init(key)
     drag(edge, 0.04)
     
     UserInputService.InputBegan:Connect(function(input)
-    	if input.KeyCode == key then
-    		edge.Visible = not edge.Visible
-    	end
+        if input.KeyCode == key then
+            local visible = not edge.Visible
+            edge.Visible = visible
+            tabButtonsEdge.Visible = visible
+        end
     end)
-    
+        
     edgeCorner.CornerRadius = UDim.new(0, 4)
     edgeCorner.Parent = edge
     
@@ -979,25 +983,43 @@ function library:Init(key)
     bar.Size = UDim2.new(0, 998, 0, 1)
     bar.Position = UDim2.new(0, 0, 0, 48) -- Posicionado abaixo do header maior
     
-    -- 🎯 PAINEL DE TABS COM BORDAS ARREDONDADAS (LADO ESQUERDO)
+    -- 🎯 PAINEL DE TABS COMPLETAMENTE SEPARADO À ESQUERDA
     tabButtonsEdge.Name = "tabButtonsEdge"
-    tabButtonsEdge.Parent = background
-    tabButtonsEdge.AnchorPoint = Vector2.new(0, 0)
+    tabButtonsEdge.Parent = screen  -- AGORA ESTÁ DIRETAMENTE NA SCREEN, NÃO NO BACKGROUND
+    tabButtonsEdge.AnchorPoint = Vector2.new(0, 0.5)
     tabButtonsEdge.BackgroundColor3 = Color3.fromRGB(35, 0, 0)
-    tabButtonsEdge.Position = UDim2.new(0.02, 0, 0.1, 0) -- Mais para a esquerda
-    tabButtonsEdge.Size = UDim2.new(0, 280, 0, 520) -- Largura aumentada
+    tabButtonsEdge.Position = UDim2.new(0, -260, 0.5, 0)  -- FORA DA EDGE, À ESQUERDA
+    tabButtonsEdge.Size = UDim2.new(0, 250, 0, 500)
     tabButtonsEdge.ZIndex = 2
     
     -- Bordas arredondadas mais pronunciadas
-    tabButtonCorner.CornerRadius = UDim.new(0, 8) -- Aumentado de 2 para 8
+    tabButtonCorner.CornerRadius = UDim.new(0, 12)  -- AUMENTEI PARA 12 PARA MAIS ARREDONDAMENTO
     tabButtonCorner.Parent = tabButtonsEdge
     
     -- Borda vermelha sutil ao redor das tabs
     local tabEdgeStroke = Instance.new("UIStroke")
-    tabEdgeStroke.Color = Color3.fromRGB(255, 0, 0)
-    tabEdgeStroke.Thickness = 1
-    tabEdgeStroke.Transparency = 0.3
+    tabEdgeStroke.Color = Color3.fromRGB(255, 80, 80)  -- VERMELHO MAIS VIVO
+    tabEdgeStroke.Thickness = 1.5
+    tabEdgeStroke.Transparency = 0.2
     tabEdgeStroke.Parent = tabButtonsEdge
+    
+    -- SOMBRA PARA DESTAQUE
+    local tabShadow = Instance.new("ImageLabel")
+    tabShadow.Name = "tabShadow"
+    tabShadow.Parent = tabButtonsEdge
+    tabShadow.BackgroundTransparency = 1
+    tabShadow.Size = UDim2.new(1, 20, 1, 20)
+    tabShadow.Position = UDim2.new(0.5, 0, 0.5, 0)
+    tabShadow.AnchorPoint = Vector2.new(0.5, 0.5)
+    tabShadow.Image = "rbxassetid://1316045217"
+    tabShadow.ImageColor3 = Color3.fromRGB(0, 0, 0)
+    tabShadow.ImageTransparency = 0.7
+    tabShadow.ScaleType = Enum.ScaleType.Slice
+    tabShadow.SliceCenter = Rect.new(10, 10, 118, 118)
+    tabShadow.ZIndex = -1
+    
+    -- FUNÇÃO PARA DRAG NAS TABS TAMBÉM
+    drag(tabButtonsEdge, 0.04)
     
     tabButtons.Name = "tabButtons"
     tabButtons.Parent = tabButtonsEdge
@@ -1005,15 +1027,15 @@ function library:Init(key)
     tabButtons.BackgroundColor3 = Color3.fromRGB(45, 0, 0)
     tabButtons.ClipsDescendants = true
     tabButtons.Position = UDim2.new(0.5, 0, 0.5, 0)
-    tabButtons.Size = UDim2.new(0, 276, 0, 516) -- Ajustado para a nova borda
+    tabButtons.Size = UDim2.new(0, 246, 0, 496)
     
-    tabButtonCorner_2.CornerRadius = UDim.new(0, 6) -- Aumentado de 2 para 6
+    tabButtonCorner_2.CornerRadius = UDim.new(0, 10)  -- AUMENTADO PARA 10
     tabButtonCorner_2.Parent = tabButtons
     
     tabButtonsGradient.Color = ColorSequence.new{
-        ColorSequenceKeypoint.new(0.00, Color3.fromRGB(60, 0, 0)),
-        ColorSequenceKeypoint.new(0.50, Color3.fromRGB(40, 0, 0)),
-        ColorSequenceKeypoint.new(1.00, Color3.fromRGB(25, 0, 0))
+        ColorSequenceKeypoint.new(0.00, Color3.fromRGB(65, 0, 0)),
+        ColorSequenceKeypoint.new(0.50, Color3.fromRGB(45, 0, 0)),
+        ColorSequenceKeypoint.new(1.00, Color3.fromRGB(30, 0, 0))
     }
     tabButtonsGradient.Rotation = 90
     tabButtonsGradient.Parent = tabButtons
@@ -1021,43 +1043,35 @@ function library:Init(key)
     tabButtonLayout.Parent = tabButtons
     tabButtonLayout.HorizontalAlignment = Enum.HorizontalAlignment.Center
     tabButtonLayout.SortOrder = Enum.SortOrder.LayoutOrder
-    tabButtonLayout.Padding = UDim.new(0, 6) -- Espaçamento entre tabs
+    tabButtonLayout.Padding = UDim.new(0, 8)
     
     tabButtonPadding.Parent = tabButtons
-    tabButtonPadding.PaddingBottom = UDim.new(0, 8)
-    tabButtonPadding.PaddingLeft = UDim.new(0, 8)
-    tabButtonPadding.PaddingRight = UDim.new(0, 8)
-    tabButtonPadding.PaddingTop = UDim.new(0, 8)
+    tabButtonPadding.PaddingBottom = UDim.new(0, 12)
+    tabButtonPadding.PaddingLeft = UDim.new(0, 12)
+    tabButtonPadding.PaddingRight = UDim.new(0, 12)
+    tabButtonPadding.PaddingTop = UDim.new(0, 12)
     
-    -- 📦 CONTAINER PRINCIPAL (LADO DIREITO) - SEPARADO DAS TABS
+    -- 📦 CONTAINER PRINCIPAL (CENTRALIZADO AGORA, JÁ QUE AS TABS ESTÃO À ESQUERDA)
     containerEdge.Name = "containerEdge"
     containerEdge.Parent = background
-    containerEdge.AnchorPoint = Vector2.new(1, 0)
+    containerEdge.AnchorPoint = Vector2.new(0.5, 0.5)
     containerEdge.BackgroundColor3 = Color3.fromRGB(35, 0, 0)
-    containerEdge.Position = UDim2.new(0.98, 0, 0.1, 0) -- Mais para a direita
-    containerEdge.Size = UDim2.new(0, 680, 0, 520) -- Altura ajustada
-    containerEdge.ZIndex = 2
+    containerEdge.Position = UDim2.new(0.5, 20, 0.54, 0)  -- MOVI 20 PIXELS PARA A DIREITA PARA DAR ESPAÇO
+    containerEdge.Size = UDim2.new(0, 700, 0, 500)  -- AUMENTEI A LARGURA
     
     -- Bordas arredondadas no container também
-    tabButtonCorner_3.CornerRadius = UDim.new(0, 8) -- Aumentado de 2 para 8
+    tabButtonCorner_3.CornerRadius = UDim.new(0, 8)
     tabButtonCorner_3.Parent = containerEdge
-    
-    -- Borda vermelha sutil ao redor do container
-    local containerEdgeStroke = Instance.new("UIStroke")
-    containerEdgeStroke.Color = Color3.fromRGB(255, 0, 0)
-    containerEdgeStroke.Thickness = 1
-    containerEdgeStroke.Transparency = 0.3
-    containerEdgeStroke.Parent = containerEdge
     
     container.Name = "container"
     container.Parent = containerEdge
     container.AnchorPoint = Vector2.new(0.5, 0.5)
     container.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
     container.Position = UDim2.new(0.5, 0, 0.5, 0)
-    container.Size = UDim2.new(0, 676, 0, 516) -- Ajustado para a nova borda
+    container.Size = UDim2.new(0, 696, 0, 496)
     container.ClipsDescendants = true
     
-    containerCorner.CornerRadius = UDim.new(0, 6) -- Aumentado de 2 para 6
+    containerCorner.CornerRadius = UDim.new(0, 6)
     containerCorner.Parent = container
     
     containerGradient.Color = ColorSequence.new{
@@ -1081,21 +1095,21 @@ function library:Init(key)
         -- Container de botão com fundo arredondado
         local tabFrame = Instance.new("Frame")
         tabFrame.Name = "tabFrame"
-        tabFrame.Size = UDim2.new(1, -16, 0, 36) -- Largura ajustada
+        tabFrame.Size = UDim2.new(1, -24, 0, 40)  -- LARGURA REDUZIDA E ALTURA AUMENTADA
         tabFrame.BackgroundColor3 = Color3.fromRGB(50, 0, 0)
         tabFrame.Parent = tabButtons
         tabFrame.ClipsDescendants = true
         tabFrame.LayoutOrder = #tabButtons:GetChildren()
     
         local tabFrameCorner = Instance.new("UICorner")
-        tabFrameCorner.CornerRadius = UDim.new(0, 6) -- Aumentado de 4 para 6
+        tabFrameCorner.CornerRadius = UDim.new(0, 8)  -- MAIS ARREDONDADO
         tabFrameCorner.Parent = tabFrame
         
-        -- Borda sutil na tab
+        -- Borda gradiente nas tabs
         local tabFrameStroke = Instance.new("UIStroke")
-        tabFrameStroke.Color = Color3.fromRGB(100, 0, 0)
-        tabFrameStroke.Thickness = 1
-        tabFrameStroke.Transparency = 0.5
+        tabFrameStroke.Color = Color3.fromRGB(120, 0, 0)
+        tabFrameStroke.Thickness = 1.2
+        tabFrameStroke.Transparency = 0.3
         tabFrameStroke.Parent = tabFrame
         
         -- ... (restante do código da função permanece igual) ...
@@ -3648,6 +3662,7 @@ function library:Init(key)
     return TabLibrary
 end
 return library
+
 
 
 
