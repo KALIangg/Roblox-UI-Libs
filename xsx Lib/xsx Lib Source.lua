@@ -1058,6 +1058,68 @@ function library:Init(key)
     containerGradient.Rotation = 90
     containerGradient.Parent = container
 
+
+      -- 🔄 Função de arrasto que move tabs junto
+    local function createDrag(gui, speed)
+        speed = speed or 0.04
+        
+        local dragging
+        local dragInput
+        local dragStart
+        local startPos
+        
+        local function update(input)
+            local delta = input.Position - dragStart
+            local newPos = UDim2.new(
+                startPos.X.Scale, 
+                startPos.X.Offset + delta.X,
+                startPos.Y.Scale, 
+                startPos.Y.Offset + delta.Y
+            )
+            
+            gui.Position = newPos
+            
+            -- Mover tabs junto mantendo a posição relativa
+            if tabButtonsEdge then
+                local tabStartX = -220 -- Posição X original
+                local tabStartY = startPos.Y.Offset -- Usar a mesma posição Y
+                tabButtonsEdge.Position = UDim2.new(
+                    0, tabStartX + delta.X,
+                    0.5, tabStartY + delta.Y
+                )
+            end
+        end
+        
+        gui.InputBegan:Connect(function(input)
+            if input.UserInputType == Enum.UserInputType.MouseButton1 then
+                dragging = true
+                dragStart = input.Position
+                startPos = gui.Position
+                
+                input.Changed:Connect(function()
+                    if input.UserInputState == Enum.UserInputState.End then
+                        dragging = false
+                    end
+                end)
+            end
+        end)
+        
+        gui.InputChanged:Connect(function(input)
+            if input.UserInputType == Enum.UserInputType.MouseMovement then
+                dragInput = input
+            end
+        end)
+        
+        game:GetService("UserInputService").InputChanged:Connect(function(input)
+            if input == dragInput and dragging then
+                update(input)
+            end
+        end)
+    end
+    
+    -- Aplicar drag à edge principal
+    createDrag(edge, 0.04)
+
       -- ⌨️ Tecla ALT para abrir/fechar CORRETAMENTE
     game:GetService("UserInputService").InputBegan:Connect(function(input)
         if input.KeyCode == key then
@@ -3645,6 +3707,7 @@ function library:Init(key)
     return TabLibrary
 end
 return library
+
 
 
 
