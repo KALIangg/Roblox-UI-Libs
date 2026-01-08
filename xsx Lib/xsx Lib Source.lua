@@ -1636,133 +1636,103 @@ function library:Init(key)
             text = text or "toggle"
             default = default or false
             callback = callback or function() end
-
+        
             local toggleButton = Instance.new("TextButton")
             local toggleLayout = Instance.new("UIListLayout")
             local toggleEdge = Instance.new("Frame")
             local toggleEdgeCorner = Instance.new("UICorner")
             local toggle = Instance.new("Frame")
             local toggleCorner = Instance.new("UICorner")
-            local toggleGradient = Instance.new("UIGradient")
-            local toggleDesign = Instance.new("Frame")
-            local toggleDesignCorner = Instance.new("UICorner")
-            local toggleDesignGradient = Instance.new("UIGradient")
             local toggleLabel = Instance.new("TextLabel")
             local toggleLabelPadding = Instance.new("UIPadding")
             local Extras = Instance.new("Folder")
             local ExtrasLayout = Instance.new("UIListLayout")
-
+        
             toggleButton.Name = "toggleButton"
             toggleButton.Parent = page
-            toggleButton.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-            toggleButton.BackgroundTransparency = 1.000
-            toggleButton.ClipsDescendants = false
+            toggleButton.BackgroundTransparency = 1
             toggleButton.Size = UDim2.new(0, 396, 0, 22)
-            toggleButton.Font = Enum.Font.Code
             toggleButton.Text = ""
-            toggleButton.TextColor3 = Color3.fromRGB(190, 190, 190)
-            toggleButton.TextSize = 14.000
-            toggleButton.TextXAlignment = Enum.TextXAlignment.Left
-
-            toggleLayout.Name = "toggleLayout"
+        
             toggleLayout.Parent = toggleButton
             toggleLayout.FillDirection = Enum.FillDirection.Horizontal
-            toggleLayout.SortOrder = Enum.SortOrder.LayoutOrder
             toggleLayout.VerticalAlignment = Enum.VerticalAlignment.Center
-
-            toggleEdge.Name = "toggleEdge"
+        
             toggleEdge.Parent = toggleButton
-            toggleEdge.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
-            toggleEdge.Size = UDim2.new(0, 18, 0, 18)
-
+            toggleEdge.BackgroundColor3 = Color3.fromRGB(60, 60, 60)
+            toggleEdge.Size = UDim2.new(0, 10, 0, 10)
+        
             toggleEdgeCorner.CornerRadius = UDim.new(0, 2)
-            toggleEdgeCorner.Name = "toggleEdgeCorner"
             toggleEdgeCorner.Parent = toggleEdge
-
-            toggle.Name = "toggle"
+        
             toggle.Parent = toggleEdge
             toggle.AnchorPoint = Vector2.new(0.5, 0.5)
-            toggle.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
             toggle.Position = UDim2.new(0.5, 0, 0.5, 0)
-            toggle.Size = UDim2.new(0, 16, 0, 16)
-
+            toggle.Size = UDim2.new(0, 6, 0, 6)
+            toggle.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+            toggle.BackgroundTransparency = default and 0 or 0.6
+        
             toggleCorner.CornerRadius = UDim.new(0, 2)
-            toggleCorner.Name = "toggleCorner"
             toggleCorner.Parent = toggle
-
-            toggleGradient.Color = ColorSequence.new{ColorSequenceKeypoint.new(0.00, Color3.fromRGB(34, 34, 34)), ColorSequenceKeypoint.new(1.00, Color3.fromRGB(28, 28, 28))}
-            toggleGradient.Rotation = 90
-            toggleGradient.Name = "toggleGradient"
-            toggleGradient.Parent = toggle
-
-            toggleDesign.Name = "toggleDesign"
-            toggleDesign.Parent = toggle
-            toggleDesign.AnchorPoint = Vector2.new(0.5, 0.5)
-            toggleDesign.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-            toggleDesign.BackgroundTransparency = 1.000
-            toggleDesign.Position = UDim2.new(0.5, 0, 0.5, 0)
-
-            toggleDesignCorner.CornerRadius = UDim.new(0, 2)
-            toggleDesignCorner.Name = "toggleDesignCorner"
-            toggleDesignCorner.Parent = toggleDesign
-
-            toggleDesignGradient.Color = ColorSequence.new{ColorSequenceKeypoint.new(0.00, Color3.fromRGB(157, 115, 255)), ColorSequenceKeypoint.new(1.00, Color3.fromRGB(106, 69, 181))}
-            toggleDesignGradient.Rotation = 90
-            toggleDesignGradient.Name = "toggleDesignGradient"
-            toggleDesignGradient.Parent = toggleDesign
-
-            toggleLabel.Name = "toggleLabel"
+        
             toggleLabel.Parent = toggleButton
-            toggleLabel.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-            toggleLabel.BackgroundTransparency = 1.000
-            toggleLabel.Position = UDim2.new(0.0454545468, 0, 0, 0)
+            toggleLabel.BackgroundTransparency = 1
             toggleLabel.Size = UDim2.new(0, 377, 0, 22)
             toggleLabel.Font = Enum.Font.Code
-            toggleLabel.LineHeight = 1.150
             toggleLabel.Text = text
-            toggleLabel.TextColor3 = Color3.fromRGB(190, 190, 190)
-            toggleLabel.TextSize = 14.000
+            toggleLabel.TextSize = 14
             toggleLabel.TextXAlignment = Enum.TextXAlignment.Left
-            toggleLabel.RichText = true
-
-            toggleLabelPadding.Name = "toggleLabelPadding"
+            toggleLabel.TextColor3 = default and Color3.fromRGB(255,255,255) or Color3.fromRGB(140,140,140)
+        
             toggleLabelPadding.Parent = toggleLabel
             toggleLabelPadding.PaddingLeft = UDim.new(0, 6)
-
-            Extras.Name = "Extras"
+        
             Extras.Parent = toggleButton
-
-            ExtrasLayout.Name = "ExtrasLayout"
+        
             ExtrasLayout.Parent = Extras
             ExtrasLayout.FillDirection = Enum.FillDirection.Horizontal
             ExtrasLayout.HorizontalAlignment = Enum.HorizontalAlignment.Right
-            ExtrasLayout.SortOrder = Enum.SortOrder.LayoutOrder
             ExtrasLayout.VerticalAlignment = Enum.VerticalAlignment.Center
             ExtrasLayout.Padding = UDim.new(0, 2)
-
-            local NewToggleLabelSize = TextService:GetTextSize(toggleLabel.Text, toggleLabel.TextSize, toggleLabel.Font, Vector2.new(math.huge,math.huge))
+        
+            local NewToggleLabelSize = TextService:GetTextSize(
+                toggleLabel.Text,
+                toggleLabel.TextSize,
+                toggleLabel.Font,
+                Vector2.new(math.huge, math.huge)
+            )
+        
             toggleLabel.Size = UDim2.new(0, NewToggleLabelSize.X + 6, 0, 22)
-
-            toggleButton.MouseEnter:Connect(function()
-                TweenService:Create(toggleLabel, TweenTable["hover"], {TextColor3 = Color3.fromRGB(210, 210, 210)}):Play()
-            end)
-            toggleButton.MouseLeave:Connect(function()
-                TweenService:Create(toggleLabel, TweenTable["hover"], {TextColor3 = Color3.fromRGB(190, 190, 190)}):Play()
-            end)
-
+        
             CreateTween("toggle_form", 0.13)
+        
             local On = default
-            if default then
-                On = true
-            else
-                On = false
-            end
+        
+            toggleButton.MouseEnter:Connect(function()
+                if not On then
+                    TweenService:Create(toggleLabel, TweenTable["hover"], {
+                        TextColor3 = Color3.fromRGB(180,180,180)
+                    }):Play()
+                end
+            end)
+        
+            toggleButton.MouseLeave:Connect(function()
+                TweenService:Create(toggleLabel, TweenTable["hover"], {
+                    TextColor3 = On and Color3.fromRGB(255,255,255) or Color3.fromRGB(140,140,140)
+                }):Play()
+            end)
+        
             toggleButton.MouseButton1Click:Connect(function()
                 On = not On
-                local SizeOn = On and UDim2.new(0, 12, 0, 12) or UDim2.new(0, 0, 0, 0)
-                local Transparency = On and 0 or 1
-                TweenService:Create(toggleDesign, TweenTable["toggle_form"], {Size = SizeOn}):Play()
-                TweenService:Create(toggleDesign, TweenTable["toggle_form"], {BackgroundTransparency = Transparency}):Play()
+        
+                TweenService:Create(toggleLabel, TweenTable["toggle_form"], {
+                    TextColor3 = On and Color3.fromRGB(255,255,255) or Color3.fromRGB(140,140,140)
+                }):Play()
+        
+                TweenService:Create(toggle, TweenTable["toggle_form"], {
+                    BackgroundTransparency = On and 0 or 0.6
+                }):Play()
+        
                 callback(On)
             end)
 
@@ -3656,6 +3626,7 @@ function library:Init(key)
     return TabLibrary
 end
 return library
+
 
 
 
