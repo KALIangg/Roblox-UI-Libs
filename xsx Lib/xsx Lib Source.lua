@@ -912,7 +912,7 @@ function library:Init(key)
     edge.AnchorPoint = Vector2.new(0.5, 0.5)
     edge.BackgroundColor3 = Color3.fromRGB(15, 15, 15)
     edge.Position = UDim2.new(0.5, 0, 0.5, 0)
-    edge.Size = UDim2.new(0, 800, 0, 600)
+    edge.Size = UDim2.new(0, 600, 0, 600)
     
     local edgeStroke = Instance.new("UIStroke")
     edgeStroke.Color = Color3.fromRGB(255, 0, 0)
@@ -940,7 +940,7 @@ function library:Init(key)
     background.AnchorPoint = Vector2.new(0.5, 0.5)
     background.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
     background.Position = UDim2.new(0.5, 0, 0.5, 0)
-    background.Size = UDim2.new(0, 998, 0, 598)
+    background.Size = UDim2.new(0, 798, 0, 598)
     background.BorderSizePixel = 0
     background.ClipsDescendants = true
     
@@ -959,7 +959,7 @@ function library:Init(key)
     headerLabel.Name = "headerLabel"
     headerLabel.Parent = background
     headerLabel.BackgroundTransparency = 1
-    headerLabel.Size = UDim2.new(0, 998, 0, 48) -- Aumentado de 38 para 48
+    headerLabel.Size = UDim2.new(0, 798, 0, 48) -- Aumentado de 38 para 48
     headerLabel.Font = Enum.Font.Code
     headerLabel.Text = title
     headerLabel.TextColor3 = Color3.fromRGB(255, 60, 60)
@@ -3670,6 +3670,7 @@ function library:Init(key)
     return TabLibrary
 end
 return library
+
 
 
 
