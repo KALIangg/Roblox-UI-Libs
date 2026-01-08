@@ -959,7 +959,7 @@ function library:Init(key)
     headerLabel.Name = "headerLabel"
     headerLabel.Parent = background
     headerLabel.BackgroundTransparency = 1
-    headerLabel.Size = UDim2.new(1, 0, 0, 48)
+    headerLabel.Size = UDim2.new(0, 500, 0, 48)
     headerLabel.Font = Enum.Font.Code
     headerLabel.Text = title
     headerLabel.TextColor3 = Color3.fromRGB(255, 60, 60)
@@ -3670,6 +3670,7 @@ function library:Init(key)
     return TabLibrary
 end
 return library
+
 
 
 
