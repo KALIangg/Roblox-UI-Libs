@@ -912,7 +912,7 @@ function library:Init(key)
     edge.AnchorPoint = Vector2.new(0.5, 0.5)
     edge.BackgroundColor3 = Color3.fromRGB(15, 15, 15)
     edge.Position = UDim2.new(0.5, 0, 0.5, 0)
-    edge.Size = UDim2.new(0, 550, 0, 580)
+    edge.Size = UDim2.new(0, 800, 0, 580)
     
     local edgeStroke = Instance.new("UIStroke")
     edgeStroke.Color = Color3.fromRGB(255, 0, 0)
@@ -3670,6 +3670,7 @@ function library:Init(key)
     return TabLibrary
 end
 return library
+
 
 
 
