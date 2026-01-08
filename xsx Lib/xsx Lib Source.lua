@@ -900,7 +900,7 @@ function library:Init(key)
     local containerCorner = Instance.new("UICorner")
     local containerGradient = Instance.new("UIGradient")
 
-    -- 🟥 GUI principal (versão fiel ao original, mas adaptada pra 1000x600)
+    -- 🟥 GUI principal
     screen.Name = "screen"
     screen.Parent = Player.PlayerGui
     screen.ResetOnSpawn = false
@@ -913,6 +913,10 @@ function library:Init(key)
     edge.BackgroundColor3 = Color3.fromRGB(15, 15, 15)
     edge.Position = UDim2.new(0.5, 0, 0.5, 0)
     edge.Size = UDim2.new(0, 800, 0, 580)
+    edge.BorderSizePixel = 0
+    
+    edgeCorner.CornerRadius = UDim.new(0, 6)
+    edgeCorner.Parent = edge
     
     local edgeStroke = Instance.new("UIStroke")
     edgeStroke.Color = Color3.fromRGB(255, 0, 0)
@@ -923,66 +927,57 @@ function library:Init(key)
     
     drag(edge, 0.04)
     
-    UserInputService.InputBegan:Connect(function(input)
-        if input.KeyCode == key then
-            local visible = not edge.Visible
-            edge.Visible = visible
-            tabButtonsEdge.Visible = visible
-        end
-    end)
-        
-    edgeCorner.CornerRadius = UDim.new(0, 4)
-    edgeCorner.Parent = edge
-    
-    -- ⚫ Fundo interno principal
+    -- ⚫ Fundo interno (preenche certinho)
     background.Name = "background"
     background.Parent = edge
     background.AnchorPoint = Vector2.new(0.5, 0.5)
-    background.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
     background.Position = UDim2.new(0.5, 0, 0.5, 0)
-    background.Size = UDim2.new(0, 500, 0, 549)
+    background.Size = UDim2.new(1, -24, 1, -24) -- margem interna real
+    background.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
     background.BorderSizePixel = 0
     background.ClipsDescendants = true
     
-    backgroundCorner.CornerRadius = UDim.new(0, 4)
+    backgroundCorner.CornerRadius = UDim.new(0, 6)
     backgroundCorner.Parent = background
     
     backgroundGradient.Color = ColorSequence.new({
-    	ColorSequenceKeypoint.new(0.00, Color3.fromRGB(30, 0, 0)),
-    	ColorSequenceKeypoint.new(0.50, Color3.fromRGB(25, 25, 25)),
-    	ColorSequenceKeypoint.new(1.00, Color3.fromRGB(40, 0, 0))
+        ColorSequenceKeypoint.new(0.00, Color3.fromRGB(30, 0, 0)),
+        ColorSequenceKeypoint.new(0.50, Color3.fromRGB(25, 25, 25)),
+        ColorSequenceKeypoint.new(1.00, Color3.fromRGB(40, 0, 0))
     })
     backgroundGradient.Rotation = 90
     backgroundGradient.Parent = background
     
-    -- 🔴 Header (título superior) - Aumentado para dar mais espaço
+    -- 🔴 HEADER
     headerLabel.Name = "headerLabel"
     headerLabel.Parent = background
     headerLabel.BackgroundTransparency = 1
-    headerLabel.Size = UDim2.new(0, 540, 0, 48)
+    headerLabel.Position = UDim2.new(0, 0, 0, 0)
+    headerLabel.Size = UDim2.new(1, 0, 0, 48)
     headerLabel.Font = Enum.Font.Code
     headerLabel.Text = title
     headerLabel.TextColor3 = Color3.fromRGB(255, 60, 60)
-    headerLabel.TextSize = 18 -- Aumentado de 16 para 18
+    headerLabel.TextSize = 18
     headerLabel.TextXAlignment = Enum.TextXAlignment.Left
+    headerLabel.TextYAlignment = Enum.TextYAlignment.Center
     headerLabel.RichText = true
     
-    headerPadding.Name = "headerPadding"
     headerPadding.Parent = headerLabel
-    headerPadding.PaddingBottom = UDim.new(0, 8)
     headerPadding.PaddingLeft = UDim.new(0, 16)
-    headerPadding.PaddingRight = UDim.new(0, 8)
-    headerPadding.PaddingTop = UDim.new(0, 8)
+    headerPadding.PaddingRight = UDim.new(0, 16)
+    headerPadding.PaddingTop = UDim.new(0, 6)
+    headerPadding.PaddingBottom = UDim.new(0, 6)
     
-    -- 🔻 Linha divisória - Ajustada para nova altura do header
+    -- 🔻 Linha divisória
     bar.Name = "bar"
-    bar.Parent = barFolder
+    bar.Parent = background
     bar.BackgroundColor3 = Color3.fromRGB(255, 0, 0)
-    bar.BackgroundTransparency = 0.3
+    bar.BackgroundTransparency = 0.35
     bar.BorderSizePixel = 0
-    bar.Size = UDim2.new(0, 549, 0, 1)
-    bar.Position = UDim2.new(0, 0, 0, 48) -- Posicionado abaixo do header maior
+    bar.Position = UDim2.new(0, 0, 0, 48)
+    bar.Size = UDim2.new(1, 0, 0, 1)
     
+        
     -- 🎯 PAINEL DE TABS COM MESMA ALTURA DA EDGE PRINCIPAL E FIXO
     tabButtonsEdge.Name = "tabButtonsEdge"
     tabButtonsEdge.Parent = background  -- VOLTA A SER FILHO DO BACKGROUND
@@ -3670,6 +3665,7 @@ function library:Init(key)
     return TabLibrary
 end
 return library
+
 
 
 
